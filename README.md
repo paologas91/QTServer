@@ -1,2 +1,2 @@
-#QT
+# QT
 Clustering algorithm
