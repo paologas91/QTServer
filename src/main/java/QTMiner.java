@@ -1,5 +1,5 @@
 
-public class QTMiner {
+class QTMiner {
 	
 	/** 
 	 * @param args
@@ -7,7 +7,7 @@ public class QTMiner {
 	private ClusterSet C;
 	private double radius;
 	
-	public QTMiner(double radius) {
+	QTMiner(double radius) {
 		C = new ClusterSet();
 		this.radius = radius;
 	}
