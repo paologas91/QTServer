@@ -5,13 +5,13 @@ abstract class Attribute {
 	private int index;
 
 	/**
-	 * Inizializza i valori dei membri name, index
-	 * @param name nome dell'attributo
-	 * @param index identificativo numerico dell'attributo
+	 * Inizializza i valori dei membri name, index.
+	 * @param name nome dell'attributo.
+	 * @param index identificativo numerico dell'attributo.
 	 */
 
 	Attribute(final String name, final int index) {		// la classe è astratta pertanto non può essere public
-		
+
 		this.name = name;
 		this.index = index;
 	}
@@ -19,12 +19,12 @@ abstract class Attribute {
 	/**
 	 * @return nome dell'attributo
 	 */
-	
+
 	String getName() {
 
 		return name;	// oppure this.name
 	}
-	
+
 	int getIndex() {
 
 		return index;
@@ -35,7 +35,7 @@ abstract class Attribute {
 	 */
 
 	@Override
-	public String toString() { 
+	public String toString() {
 
 		return name;
 	}
