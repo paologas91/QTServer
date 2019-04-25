@@ -1,19 +1,46 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
 
-# Ignore Gradle build output directory
-build
-
-settings.gradle
-build.gradle
-config/
-gradle/
-gradlew
-gradlew.bat
-
-# Ignore Eclipse 
+# Eclipse project file
 .settings/
 .classpath
 .project
-bin/
-doc/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# Java annotation processor (APT)
+.factorypath
+
+# sbteclipse plugin
+.target
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# OS X
+.DS_Store
+
+# Package Files #
+*.zip
+*.tar.gz
+*.rar
+
+### Gradle ###
+.gradle
+/build/classes
+/build/distributions
+/build/jacoco
+/build/libs
+#/build/scripts
+#/build/test-results
