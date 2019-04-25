@@ -1,25 +1,25 @@
 
-public class DiscreteAttribute extends Attribute {
-	
+class DiscreteAttribute extends Attribute {
+
 	// attributi d'istanza
-	
+
 	private String values[];
-	
+
 	// metodi
-	
-	public DiscreteAttribute(String name, int index, String values[]) {
+
+	DiscreteAttribute(final String name, final int index, final String values[]) {
 	
 		super(name, index);
 		this.values = values;
 	}
-	
-	public int getNumberOfDistinctValues() {
-		
+
+	int getNumberOfDistinctValues() {
+
 		return values.length;
 	}
-	
-	public String getValue(int i) {
-		
-		return values[i];       // oppure this.values[i]
+
+	public String getValue(final int i) {
+
+		return values[i];	// oppure this.values[i]
 	}
 }
