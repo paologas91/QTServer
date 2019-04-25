@@ -1,5 +1,5 @@
 
-public class Tuple {
+class Tuple {
 
 	private Item[] tuple;   // array di Item
 	

@@ -56,15 +56,24 @@ class ArraySet {
 	}
 	
 	int[] toArray() {
-		int a[] = new int[0];
-		for (int i = 0; i < size; i++) {
-			if (get(i)) {
-				int temp[] = new int[a.length + 1];
+		/*
+		int a[]=new int[0];
+		for(int i=0;i<size;i++){
+			if(get(i)){
+				int temp[]=new int[a.length+1];
 				System.arraycopy(a, 0, temp, 0, a.length);
-				a = temp;
-				a[a.length - 1] = i;
+				a=temp;
+				a[a.length-1]=i;
+			}
+		}*/
+		int[] a=new int[size()];
+		int index=0;
+		for(int i=0;i<size;i++) {
+			if(get(i)) {
+				a[index++]=i;
 			}
 		}
+		
 		return a;
 	}
 }
