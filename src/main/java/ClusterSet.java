@@ -1,11 +1,9 @@
 
-public class ClusterSet {
+class ClusterSet {
 
 	private Cluster C[] = new Cluster[0];
 	
-	ClusterSet() {
-		
-	}
+	ClusterSet() {}
 	
 	void add(Cluster c) {
 		Cluster tempC[] = new Cluster[C.length+1];
