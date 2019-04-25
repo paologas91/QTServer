@@ -18,7 +18,7 @@ class DiscreteAttribute extends Attribute {
 		return values.length;
 	}
 
-	public String getValue(final int i) {
+	String getValue(final int i) {
 
 		return values[i];	// oppure this.values[i]
 	}
