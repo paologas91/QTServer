@@ -17,7 +17,7 @@ class ContinuousAttribute extends Attribute {
 
 	double getScaledValue(final double v) {
 
-		double v1 = (v-min)/(max-min);
+		double v1 = (v - min) / (max - min);
 
 		return v1;
 	}
