@@ -1,17 +1,19 @@
 
 class DiscreteItem extends Item {
 
-	DiscreteItem(DiscreteAttribute attribute, String value) {
+	DiscreteItem(final DiscreteAttribute attribute, final String value) {
 		/*
 		 * constructor
 		 */
 		super(attribute, value);
 	}
-	
-	double distance(Object a) {
-		if (getValue().equals(a)) // se non metto il toString() fallisce sempre il confronto
-			return 0.0;	
-		else 		
+
+	double distance(final Object a) {
+		// se non metto il toString() fallisce sempre il confronto
+		if (getValue().equals(a)) {
+			return 0.0;
+		} else {
 			return 1.0;
+		}
 	}
 }
