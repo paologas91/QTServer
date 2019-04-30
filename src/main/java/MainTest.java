@@ -2,10 +2,10 @@
 public class MainTest {
 
 	/**
-	 * @param args
+	 * @param args an array of strings
 	 */
 	public static void main(String[] args) {
-		
+
 		Data data = new Data();
 		System.out.println(data);
 		double radius = 2.0;

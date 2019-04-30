@@ -3,12 +3,12 @@ class DiscreteAttribute extends Attribute {
 
 	// attributi d'istanza
 
-	private String values[];
+	private String[] values;
 
 	// metodi
 
-	DiscreteAttribute(final String name, final int index, final String values[]) {
-	
+	DiscreteAttribute(final String name, final int index, final String[] values) {
+
 		super(name, index);
 		this.values = values;
 	}

@@ -1,60 +1,65 @@
 import java.util.Arrays;
 
 class ArraySet {
-	
-	private boolean set[];
+
+	private boolean[] set;
 	private int size = 0;
 	private int cardinality = 0;
-	
+
 	ArraySet() {
 		set = new boolean[50];
-		for (int i = 0; i < set.length; i++)
+		for (int i = 0; i < set.length; i++) {
 			set[i] = false;
+		}
 	}
-	
+
 	//return true if add is changing the arraySet
-	boolean add(int i) {
+	boolean add(final int i) {
 		if (i >= set.length) {
 			//enlarge the set
-			boolean temp[] = new boolean[set.length * 2];
+			boolean[] temp = new boolean[set.length * 2];
 			Arrays.fill(temp, false);
 			System.arraycopy(set, 0, temp, 0, set.length);
 			set = temp;
-		}	
+		}
 		boolean added = set[i];
 		set[i] = true;
-		if (i >= size)
+		if (i >= size) {
 			size = i + 1;
-		if (!added)
+		}
+		if (!added) {
 			cardinality++;
+		}
 		return !added;
 	}
-	
-	boolean delete(int i) {
+
+	boolean delete(final int i) {
 		if (i < size) {
 			boolean deleted = set[i];
 			set[i] = false;
 			if (i == size - 1) {
 				//update size
 				int j;
-				for (j = size - 1; j >= 0 && !set[j]; j--);
+				for (j = size - 1; j >= 0 && !set[j]; j--) {
 				size = j + 1;
+				}
 			}
-			if (deleted)
+			if (deleted) {
 				cardinality--;
+			}
 			return deleted;
 		}
 		return false;
 	}
-	
-	boolean get(int i) {
+
+	boolean get(final int i) {
 		return set[i];
 	}
-	
-	int size () {
+
+	int size() {
 		return cardinality;
 	}
-	
+
 	int[] toArray() {
 		/*
 		int a[]=new int[0];
@@ -66,14 +71,14 @@ class ArraySet {
 				a[a.length-1]=i;
 			}
 		}*/
-		int[] a=new int[size()];
-		int index=0;
-		for(int i=0;i<size;i++) {
-			if(get(i)) {
-				a[index++]=i;
+		int[] a = new int[size()];
+		int index = 0;
+		for (int i = 0; i < size; i++) {
+			if (get(i)) {
+				a[index++] = i;
 			}
 		}
-		
+
 		return a;
 	}
 }
