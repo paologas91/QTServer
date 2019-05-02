@@ -1,3 +1,4 @@
+package data;
 
 class ContinuousAttribute extends Attribute {
 

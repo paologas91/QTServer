@@ -1,3 +1,4 @@
+package data;
 
 class DiscreteItem extends Item {
 

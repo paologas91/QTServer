@@ -1,12 +1,13 @@
+package utility;
 import java.util.Arrays;
 
-class ArraySet {
+public class ArraySet {
 
 	private boolean[] set;
 	private int size = 0;
 	private int cardinality = 0;
 
-	ArraySet() {
+	public ArraySet() {
 		set = new boolean[50];
 		for (int i = 0; i < set.length; i++) {
 			set[i] = false;
@@ -14,7 +15,7 @@ class ArraySet {
 	}
 
 	//return true if add is changing the arraySet
-	boolean add(final int i) {
+	public boolean add(final int i) {
 		if (i >= set.length) {
 			//enlarge the set
 			boolean[] temp = new boolean[set.length * 2];
@@ -33,7 +34,7 @@ class ArraySet {
 		return !added;
 	}
 
-	boolean delete(final int i) {
+	public boolean delete(final int i) {
 		if (i < size) {
 			boolean deleted = set[i];
 			set[i] = false;
@@ -52,15 +53,15 @@ class ArraySet {
 		return false;
 	}
 
-	boolean get(final int i) {
+	public boolean get(final int i) {
 		return set[i];
 	}
 
-	int size() {
+	public int size() {
 		return cardinality;
 	}
 
-	int[] toArray() {
+	public int[] toArray() {
 		/*
 		int a[]=new int[0];
 		for(int i=0;i<size;i++){

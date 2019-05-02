@@ -1,5 +1,7 @@
+package mining;
+import data.Data;
 
-class QTMiner {
+public class QTMiner {
 
 	/**
 	 * @param args
@@ -7,16 +9,16 @@ class QTMiner {
 	private ClusterSet C;
 	private double radius;
 
-	QTMiner(final double radius) {
+	public QTMiner(final double radius) {
 		C = new ClusterSet();
 		this.radius = radius;
 	}
 
-	ClusterSet getC() {
+	public ClusterSet getC() {
 		return C;
 	}
 
-	int compute(final Data data) {
+	public int compute(final Data data) {
 		int numclusters = 0;
 		boolean[] isClustered = new boolean[data.getNumberOfExamples()];
 		for (int i = 0; i < isClustered.length; i++) {

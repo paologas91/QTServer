@@ -1,5 +1,7 @@
+package mining;
+import data.Data;
 
-class ClusterSet {
+public class ClusterSet {
 
 	private Cluster[] C = new Cluster[0];
 
