@@ -1,3 +1,5 @@
+import data.Data;
+import mining.QTMiner;
 
 public class MainTest {
 

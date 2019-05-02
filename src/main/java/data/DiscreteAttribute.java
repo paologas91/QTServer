@@ -1,3 +1,4 @@
+package data;
 
 class DiscreteAttribute extends Attribute {
 

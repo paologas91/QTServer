@@ -1,5 +1,6 @@
+package data;
 
-class Tuple {
+public class Tuple {
 
 	private Item[] tuple; // array di Item
 
@@ -7,11 +8,11 @@ class Tuple {
 		tuple = new Item[size];
 	}
 
-	int getLength() {
+	public int getLength() {
 		return tuple.length;
 	}
 
-	Item get(final int i) {
+	public Item get(final int i) {
 		return tuple[i];
 	}
 
@@ -19,7 +20,7 @@ class Tuple {
 		tuple[i] = c;
 	}
 
-	double getDistance(final Tuple obj) {
+	public double getDistance(final Tuple obj) {
 		/*
 		 * Comportamento: determina la distanza tra la tupla riferita da obj e la tupla
 		 * corrente (riferita da this). La distanza è ottenuta come la somma delle
@@ -33,7 +34,7 @@ class Tuple {
 		return distance;
 	}
 
-	double avgDistance(final Data data, final int[] clusteredData) {
+	public double avgDistance(final Data data, final int[] clusteredData) {
 		double p = 0.0, sumD = 0.0;
 		for (int i = 0; i < clusteredData.length; i++) {
 			double d = getDistance(data.getItemSet(clusteredData[i]));

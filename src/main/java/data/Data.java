@@ -1,3 +1,4 @@
+package data;
 
 public class Data {
 
@@ -83,7 +84,7 @@ public class Data {
 		return attributeSet;
 	}
 
-	Tuple getItemSet(final int index) {
+	public Tuple getItemSet(final int index) {
 		Tuple tuple = new Tuple(attributeSet.length);
 		for (int i = 0; i < attributeSet.length; i++) {
 			tuple.add(new DiscreteItem((DiscreteAttribute) attributeSet[i], (String) data[index][i]), i);
