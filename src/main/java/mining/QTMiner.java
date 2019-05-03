@@ -1,5 +1,7 @@
 package mining;
+
 import data.Data;
+import exceptions.ClusteringRadiusException;
 
 public class QTMiner {
 
@@ -18,7 +20,7 @@ public class QTMiner {
 		return C;
 	}
 
-	public int compute(final Data data) {
+	public int compute(final Data data) throws ClusteringRadiusException {// throws EmptyDatasetException
 		int numclusters = 0;
 		boolean[] isClustered = new boolean[data.getNumberOfExamples()];
 		for (int i = 0; i < isClustered.length; i++) {
@@ -37,10 +39,14 @@ public class QTMiner {
 			}
 			countClustered += c.getSize();
 		}
+
+		if (numclusters == 1) {
+			throw new ClusteringRadiusException(data.getNumberOfExamples() + "tuples in one cluster!");
+		}
 		return numclusters;
 	}
 
-	Cluster buildCandidateCluster(final Data data, final boolean isClustered[]) {
+	Cluster buildCandidateCluster(final Data data, final boolean isClustered[]) {// throws EmptyDatasetException
 		/*
 		 * Comportamento: costruisce un cluster per ciascuna tupla di data non ancora
 		 * clusterizzata in un cluster di C e restituisce il cluster candidato più
