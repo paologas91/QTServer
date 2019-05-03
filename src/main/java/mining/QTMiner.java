@@ -2,6 +2,7 @@ package mining;
 
 import data.Data;
 import exceptions.ClusteringRadiusException;
+import exceptions.EmptyDatasetException;
 
 public class QTMiner {
 
@@ -20,7 +21,11 @@ public class QTMiner {
 		return C;
 	}
 
-	public int compute(final Data data) throws ClusteringRadiusException {// throws EmptyDatasetException
+	public int compute(final Data data) throws ClusteringRadiusException, EmptyDatasetException {// throws EmptyDatasetException
+		
+		if (data.getNumberOfExamples() == 0) {
+			throw new EmptyDatasetException("Empty dataset!");
+		}
 		int numclusters = 0;
 		boolean[] isClustered = new boolean[data.getNumberOfExamples()];
 		for (int i = 0; i < isClustered.length; i++) {
