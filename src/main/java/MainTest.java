@@ -1,5 +1,6 @@
 import data.Data;
 import exceptions.ClusteringRadiusException;
+import exceptions.EmptyDatasetException;
 import keyboardinput.Keyboard;
 import mining.QTMiner;
 
@@ -27,10 +28,11 @@ public class MainTest {
 				System.out.println("Number of clusters:" + numIter);
 				System.out.println(qt.getC().toString(data));
 			} catch (ClusteringRadiusException e) {
-				// TODO Auto-generated catch block
-				System.out.println(e.getMessage());
+				e.printStackTrace(System.err);
+			} catch (EmptyDatasetException e) {
+				e.printStackTrace(System.err);
 			}
-
+			
 			System.out.println("New execution?(y/n) ");
 			if (Keyboard.readChar() == 'n') {
 				break;
