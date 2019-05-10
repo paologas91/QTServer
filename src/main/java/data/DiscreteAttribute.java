@@ -1,26 +1,31 @@
 package data;
 
-class DiscreteAttribute extends Attribute {
+import java.util.TreeSet;
+import java.util.Iterator;
+
+class DiscreteAttribute extends Attribute implements Iterable<String> {
 
 	// attributi d'istanza
 
-	private String[] values;
+	private TreeSet<String> values = new TreeSet<String>();
 
 	// metodi
 
 	DiscreteAttribute(final String name, final int index, final String[] values) {
 
 		super(name, index);
-		this.values = values;
+		for (String s : values) {
+			this.values.add(s);
+		}
+	}
+
+	public Iterator<String> iterator() {
+
+		return values.iterator();
 	}
 
 	int getNumberOfDistinctValues() {
 
-		return values.length;
-	}
-
-	String getValue(final int i) {
-
-		return values[i];	// oppure this.values[i]
+		return values.size();
 	}
 }

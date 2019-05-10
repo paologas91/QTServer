@@ -1,10 +1,13 @@
 package data;
 
+import java.util.List;
+import java.util.LinkedList;
+
 public class Data {
 
 	private Object[][] data;
 	private int numberOfExamples;
-	private Attribute[] attributeSet;
+	private List<Attribute> attributeSet = new LinkedList<Attribute>();
 
 	public Data() {
 
@@ -34,34 +37,34 @@ public class Data {
 		//explanatory Set
 
 		// siccome è un vettore e non un oggetto posso istanziare la classe astratta
-		attributeSet = new Attribute[5];
+		// attributeSet = new Attribute[5];
 
 		String[] outLookValues = new String[3];
 		outLookValues[0] = "overcast";
 		outLookValues[1] = "rain";
 		outLookValues[2] = "sunny";
-		attributeSet[0] = new DiscreteAttribute("Outlook", 0, outLookValues);
+		attributeSet.add(new DiscreteAttribute("Outlook", 0, outLookValues));
 
 		String[] temperatureValues = new String[3];
 		temperatureValues[0] = "hot";
 		temperatureValues[1] = "mild";
 		temperatureValues[2] = "cool";
-		attributeSet[1] = new DiscreteAttribute("Temperature", 1, temperatureValues);
+		attributeSet.add(new DiscreteAttribute("Temperature", 1, temperatureValues));
 
 		String[] humidityValues = new String[2];
 		humidityValues[0] = "high";
 		humidityValues[1] = "normal";
-		attributeSet[2] = new DiscreteAttribute("Humidity", 2, humidityValues);
+		attributeSet.add(new DiscreteAttribute("Humidity", 2, humidityValues));
 
 		String[] windValues = new String[2];
 		windValues[0] = "weak";
 		windValues[1] = "strong";
-		attributeSet[3] = new DiscreteAttribute("Wind", 3, windValues);
+		attributeSet.add(new DiscreteAttribute("Wind", 3, windValues));
 
 		String[] playTennisValues = new String[2];
 		playTennisValues[0] = "yes";
 		playTennisValues[1] = "no";
-		attributeSet[4] = new DiscreteAttribute("PlayTennis", 4, playTennisValues);
+		attributeSet.add(new DiscreteAttribute("PlayTennis", 4, playTennisValues));
 	}
 
 	public int getNumberOfExamples() {
@@ -69,7 +72,7 @@ public class Data {
 	}
 
 	public int getNumberOfAttributes() {
-		return attributeSet.length;
+		return attributeSet.size();
 	}
 
 	public Object getAttributeValue(final int exampleIndex, final int attributeIndex) {
@@ -77,17 +80,17 @@ public class Data {
 	}
 
 	public Attribute getAttribute(final int index) {
-		return attributeSet[index];
+		return attributeSet.get(index);
 	}
 
-	public Attribute[] getAttributeSchema() {
+	public List<Attribute> getAttributeSchema() {
 		return attributeSet;
 	}
 
 	public Tuple getItemSet(final int index) {
-		Tuple tuple = new Tuple(attributeSet.length);
-		for (int i = 0; i < attributeSet.length; i++) {
-			tuple.add(new DiscreteItem((DiscreteAttribute) attributeSet[i], (String) data[index][i]), i);
+		Tuple tuple = new Tuple(attributeSet.size());
+		for (int i = 0; i < attributeSet.size(); i++) {
+			tuple.add(new DiscreteItem((DiscreteAttribute) attributeSet.get(i), (String) data[index][i]), i);
 		}
 		return tuple;
 	}
@@ -97,7 +100,7 @@ public class Data {
 		String s = "";
 		for (int i = 0; i < getNumberOfAttributes(); i++) {
 			// se non avessi ridefinito il toString in Attribute, avrei la stampa di default di Object
-			s += attributeSet[i];
+			s += attributeSet.get(i);
 			if (i != getNumberOfAttributes() - 1) {
 				s += ", ";
 			}

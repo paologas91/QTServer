@@ -12,7 +12,6 @@ abstract class Attribute {
 	 */
 
 	Attribute(final String name, final int index) {		// la classe è astratta pertanto non può essere public
-
 		this.name = name;
 		this.index = index;
 	}
@@ -22,7 +21,6 @@ abstract class Attribute {
 	 */
 
 	String getName() {
-
 		return name;	// oppure this.name
 	}
 
@@ -37,7 +35,6 @@ abstract class Attribute {
 
 	@Override
 	public String toString() {
-
 		return name;
 	}
 }
