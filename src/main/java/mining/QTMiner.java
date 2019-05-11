@@ -1,10 +1,11 @@
 package mining;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import data.Data;
 import exceptions.ClusteringRadiusException;
 import exceptions.EmptyDatasetException;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class QTMiner {
 
@@ -74,8 +75,7 @@ public class QTMiner {
 		}
 
 		// ricerco il cluster più popoloso
-		
-		System.out.println("maaaaa");
+
 		return ((TreeSet<Cluster>) C).last();
 	}
 }
