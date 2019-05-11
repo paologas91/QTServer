@@ -1,5 +1,6 @@
 package mining;
 
+import java.util.Set;
 import java.util.TreeSet;
 
 import data.Data;
@@ -58,7 +59,7 @@ public class QTMiner {
 		 * clusterizzata in un cluster di C e restituisce il cluster candidato più
 		 * popoloso
 		 */
-		TreeSet<Cluster> C = new TreeSet<Cluster>();
+		Set<Cluster> C = new TreeSet<Cluster>();
 		for (int i = 0; i < data.getNumberOfExamples(); i++) {
 			if (!isClustered[i]) {
 				Cluster candidato = new Cluster(data.getItemSet(i));
@@ -72,9 +73,9 @@ public class QTMiner {
 				C.add(candidato);
 			}
 		}
-		
+
 		// ricerco il cluster più popoloso
-		
-		return C.last();
+
+		return ((TreeSet<Cluster>) C).last();
 	}
 }

@@ -34,7 +34,7 @@ public class MainTest {
 			}
 			
 			System.out.println("New execution?(y/n) ");
-			if (Keyboard.readChar() == 'n') {
+			if (Keyboard.readChar() == 'i') {
 				break;
 			}
 		}
