@@ -72,9 +72,10 @@ public class QTMiner {
 				C.add(candidato);
 			}
 		}
-		
+
 		// ricerco il cluster più popoloso
 		
+		System.out.println("maaaaa");
 		return ((TreeSet<Cluster>) C).last();
 	}
 }
