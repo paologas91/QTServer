@@ -80,6 +80,7 @@ public class QTMiner {
 			if (C.get(i).getSize() > max) {
 				popoloso = C.get(i);
 				max = C.get(i).getSize();
+				System.out.println("aaaaaaaaaaaah");
 			}
 		}
 		return popoloso;
