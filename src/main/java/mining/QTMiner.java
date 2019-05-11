@@ -3,6 +3,8 @@ package mining;
 import data.Data;
 import exceptions.ClusteringRadiusException;
 import exceptions.EmptyDatasetException;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class QTMiner {
 
@@ -38,9 +40,8 @@ public class QTMiner {
 			C.add(c);
 			numclusters++;
 			// Rimuovo tuple clusterizzate da dataset
-			int[] clusteredTupleId = c.iterator();
-			for (int i = 0; i < clusteredTupleId.length; i++) {
-				isClustered[clusteredTupleId[i]] = true;
+			for (Integer i : c) {
+				isClustered[i] = true;
 			}
 			countClustered += c.getSize();
 		}
@@ -57,8 +58,7 @@ public class QTMiner {
 		 * clusterizzata in un cluster di C e restituisce il cluster candidato più
 		 * popoloso
 		 */
-		ClusterSet C = new ClusterSet();
-		int n = 0;
+		Set<Cluster> C = new TreeSet<Cluster>();
 		for (int i = 0; i < data.getNumberOfExamples(); i++) {
 			if (!isClustered[i]) {
 				Cluster candidato = new Cluster(data.getItemSet(i));
@@ -70,18 +70,11 @@ public class QTMiner {
 					}
 				}
 				C.add(candidato);
-				n++;
 			}
 		}
+		
 		// ricerco il cluster più popoloso
-		int max = C.get(0).getSize();
-		Cluster popoloso = C.get(0);
-		for (int i = 0; i < n; i++) {
-			if (C.get(i).getSize() > max) {
-				popoloso = C.get(i);
-				max = C.get(i).getSize();
-			}
-		}
-		return popoloso;
+		
+		return ((TreeSet<Cluster>) C).last();
 	}
 }

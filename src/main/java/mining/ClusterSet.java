@@ -1,39 +1,40 @@
 package mining;
+
 import data.Data;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Iterator;
 
-public class ClusterSet {
+public class ClusterSet implements Iterable<Cluster> {
 
-	private Cluster[] C = new Cluster[0];
+	private Set<Cluster> C = new TreeSet<Cluster>();
 
 	ClusterSet() { }
 
 	void add(final Cluster c) {
-		Cluster[] tempC = new Cluster[C.length + 1];
-		for (int i = 0; i < C.length; i++) {
-			tempC[i] = C[i];
-			}
-		tempC[C.length] = c;
-		C = tempC;
+		C.add(c);
 	}
-
-	Cluster get(final int i) {
-		return C[i];
+	
+	public Iterator<Cluster> iterator() {
+		return C.iterator();
 	}
-
+	
+	@Override
 	public String toString() {
 		String str = "";
-		for (int i = 0; i < C.length; i++) {
-			str += C[i].getCentroid();
+		for (Cluster c : C) {
+			str += c.getCentroid();
 		}
 		return str;
 	}
 
 	public String toString(final Data data) {
 		String str = "";
-		for (int i = 0; i < C.length; i++) {
-			if (C[i] != null) {
-				str += i + ":" + C[i].toString(data) + "\n";
-			}
+		int i = 0;
+		for (Cluster c : C) {
+			str += (i + 1) + ":";
+			str += c.toString(data) + "\n";
+			i++;
 		}
 		return str;
 	}
