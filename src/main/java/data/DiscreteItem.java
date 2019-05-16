@@ -11,7 +11,7 @@ class DiscreteItem extends Item {
 
 	double distance(final Object a) {
 		// se non metto il toString() fallisce sempre il confronto
-		if (getValue().equals(a)) {
+		if (getValue().equals(((Item) a).getValue())) {
 			return 0.0;
 		} else {
 			return 1.0;

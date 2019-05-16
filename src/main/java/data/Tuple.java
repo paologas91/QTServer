@@ -31,7 +31,7 @@ public class Tuple {
 		 */
 		double distance = 0.0;
 		for (int i = 0; i < obj.getLength(); i++) {
-			distance += get(i).distance(obj.get(i).getValue());
+			distance += get(i).distance(obj.get(i));
 		}
 		return distance;
 	}
