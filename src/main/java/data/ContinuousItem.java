@@ -1,8 +1,6 @@
 package data;
 
-import java.io.Serializable;
-
-public class ContinuousItem extends Item implements Serializable {
+public class ContinuousItem extends Item {
 	
 	public ContinuousItem(final Attribute attribute, final double value) {
 		super(attribute, value);
