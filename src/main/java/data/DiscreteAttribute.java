@@ -1,9 +1,10 @@
 package data;
 
 import java.util.TreeSet;
+import java.io.Serializable;
 import java.util.Iterator;
 
-class DiscreteAttribute extends Attribute implements Iterable<String> {
+class DiscreteAttribute extends Attribute implements Iterable<String>, Serializable {
 
 	// attributi d'istanza
 

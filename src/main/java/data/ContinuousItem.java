@@ -1,6 +1,8 @@
 package data;
 
-public class ContinuousItem extends Item {
+import java.io.Serializable;
+
+public class ContinuousItem extends Item implements Serializable {
 	
 	public ContinuousItem(final Attribute attribute, final double value) {
 		super(attribute, value);
@@ -10,6 +12,6 @@ public class ContinuousItem extends Item {
 		// do I need RTTI?
 		return (double) Math.abs( ((ContinuousAttribute) this.getAttribute()).getScaledValue((double) this.getValue()) - 
 				((ContinuousAttribute) ((Item) a).getAttribute()).getScaledValue((double) ((Item) a).getValue()));
+		// se metto il casta ContinuousItem funziona lo stesso ma qual è meglio dei due?
 	}
-
 }

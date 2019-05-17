@@ -14,22 +14,7 @@ public class Data {
 		//data
 
 		data = new Object[14][5];
-/*
-		data[0] = new String[]{"sunny", 30.3, "high", "weak", "no"};
-		data[1] = new String[]{"sunny", "hot", "high", "strong", "no"};
-		data[2] = new String[]{"overcast", "hot", "high", "weak", "yes"};
-		data[3] = new String[]{"rain", "mild", "high", "weak", "yes"};
-		data[4] = new String[]{"rain", "cool", "normal", "weak", "yes"};
-		data[5] = new String[]{"rain", "cool", "normal", "strong", "no"};
-		data[6] = new String[]{"overcast", "cool", "normal", "strong", "yes"};
-		data[7] = new String[]{"sunny", "mild", "high", "weak", "no"};
-		data[8] = new String[]{"sunny", "cool", "normal", "weak", "yes"};
-		data[9] = new String[]{"rain", "mild", "normal", "weak", "yes"};
-		data[10] = new String[]{"sunny", "mild", "normal", "strong", "yes"};
-		data[11] = new String[]{"overcast", "mild", "high", "strong", "yes"};
-		data[12] = new String[]{"overcast", "hot", "normal", "weak", "yes"};
-		data[13] = new String[]{"rain", "mild", "high", "strong", "no"};
-*/
+
 		data[0][0] = new String("sunny");
 		data[1][0] = new String("sunny");
 		data[2][0] = new String("overcast");
@@ -59,7 +44,7 @@ public class Data {
 		data[11][1] = new Double (12.5);
 		data[12][1] = new Double(29.21);
 		data[13][1] = new Double (12.5);
-		
+
 		data[0][2] = new String("high");
 		data[1][2] = new String("high");
 		data[2][2] = new String("high");
@@ -74,7 +59,7 @@ public class Data {
 		data[11][2] = new String("high");
 		data[12][2] = new String("normal");
 		data[13][2] = new String("high");
-		
+
 		data[0][3] = new String("weak");
 		data[1][3] = new String("strong");
 		data[2][3] = new String("weak");
@@ -89,7 +74,7 @@ public class Data {
 		data[11][3] = new String("strong");
 		data[12][3] = new String("weak");
 		data[13][3] = new String("strong");
-		
+
 		data[0][4] = new String("no");
 		data[1][4] = new String("no");
 		data[2][4] = new String("yes");

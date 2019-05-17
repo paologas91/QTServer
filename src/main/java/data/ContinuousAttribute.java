@@ -1,6 +1,8 @@
 package data;
 
-class ContinuousAttribute extends Attribute {
+import java.io.Serializable;
+
+class ContinuousAttribute extends Attribute implements Serializable {
 
 	// attributi d'istanza
 
