@@ -23,8 +23,10 @@ public class ClusterSet implements Iterable<Cluster>, Serializable {
 	@Override
 	public String toString() {
 		String str = "";
+		int i = 1;
 		for (Cluster c : C) {
-			str += c.getCentroid();
+			str += i + ":Centroid=(" + c.getCentroid() + ")\n";
+			i++;
 		}
 		return str;
 	}

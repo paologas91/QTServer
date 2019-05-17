@@ -2,6 +2,9 @@ package mining;
 
 import java.util.Set;
 import java.util.TreeSet;
+
+import com.google.common.base.MoreObjects.ToStringHelper;
+
 import data.Data;
 import data.EmptyDatasetException;
 
@@ -24,7 +27,7 @@ public class QTMiner {
 		C = new ClusterSet();
 		this.radius = radius;
 	}
-	
+
 	/**
 	 * @param fileName percorso + nome file
 	 */
@@ -97,7 +100,11 @@ public class QTMiner {
 	public void salva(String fileName) throws FileNotFoundException, IOException {
 		FileOutputStream outFile = new FileOutputStream(fileName);
 		ObjectOutputStream outStream = new ObjectOutputStream(outFile);
-		outStream.writeObject(outStream);
+		outStream.writeObject(C);
 		outFile.close();
+	}
+	
+	public String toString() {
+		return C.toString();
 	}
 }
