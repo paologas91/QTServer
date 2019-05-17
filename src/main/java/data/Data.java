@@ -105,7 +105,7 @@ public class Data {
 		outLookValues[2] = "sunny";
 		attributeSet.add(new DiscreteAttribute("Outlook", 0, outLookValues));
 
-		attributeSet.add(new ContinuousAttribute("Temperature", 1, 3.2, 38.7));
+		attributeSet.add(new ContinuousAttribute("Temperature", 1, 0, 30.3));
 
 		String[] humidityValues = new String[2];
 		humidityValues[0] = "high";
