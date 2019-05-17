@@ -1,5 +1,7 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import keyboardinput.Keyboard;
 import mining.ClusteringRadiusException;
 import mining.QTMiner;
@@ -10,7 +12,6 @@ public class MainTest {
 	/**
 	 * @param args
 	 */
-	
 	private int menu(){
 		int answer;
 		do{
@@ -23,7 +24,7 @@ public class MainTest {
 		return answer;
 		
 	}
-	
+
 	private QTMiner learningFromFile() throws FileNotFoundException, IOException, ClassNotFoundException{
 		String fileName="";
 		System.out.print("File name:");
@@ -32,7 +33,13 @@ public class MainTest {
 		
 	}
 	public static void main(String[] args) {
-		
+		/*
+		try {
+			System.setErr(new PrintStream(new File("log.txt")));
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		*/
 		MainTest main=new MainTest();
 		do{
 			int menuAnswer=main.menu();
