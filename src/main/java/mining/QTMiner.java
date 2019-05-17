@@ -2,12 +2,8 @@ package mining;
 
 import java.util.Set;
 import java.util.TreeSet;
-
-import com.google.common.base.MoreObjects.ToStringHelper;
-
 import data.Data;
 import data.EmptyDatasetException;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
