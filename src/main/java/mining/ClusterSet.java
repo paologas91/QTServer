@@ -3,9 +3,10 @@ package mining;
 import data.Data;
 import java.util.Set;
 import java.util.TreeSet;
+import java.io.Serializable;
 import java.util.Iterator;
 
-public class ClusterSet implements Iterable<Cluster> {
+public class ClusterSet implements Iterable<Cluster>, Serializable {
 
 	private Set<Cluster> C = new TreeSet<Cluster>();
 
@@ -22,8 +23,10 @@ public class ClusterSet implements Iterable<Cluster> {
 	@Override
 	public String toString() {
 		String str = "";
+		int i = 1;
 		for (Cluster c : C) {
-			str += c.getCentroid();
+			str += i + ":Centroid=(" + c.getCentroid() + ")\n";
+			i++;
 		}
 		return str;
 	}

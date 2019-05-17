@@ -2,10 +2,14 @@ package mining;
 
 import java.util.Set;
 import java.util.TreeSet;
-
 import data.Data;
-import exceptions.ClusteringRadiusException;
-import exceptions.EmptyDatasetException;
+import data.EmptyDatasetException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class QTMiner {
 
@@ -18,6 +22,16 @@ public class QTMiner {
 	public QTMiner(final double radius) {
 		C = new ClusterSet();
 		this.radius = radius;
+	}
+
+	/**
+	 * @param fileName percorso + nome file
+	 */
+	public QTMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
+		FileInputStream inFile = new FileInputStream(fileName);
+		ObjectInputStream inStream = new ObjectInputStream(inFile);
+		C = (ClusterSet) inStream.readObject();
+		inStream.close();
 	}
 
 	public ClusterSet getC() {
@@ -77,5 +91,16 @@ public class QTMiner {
 		// ricerco il cluster più popoloso
 
 		return ((TreeSet<Cluster>) C).last();
+	}
+	
+	public void salva(String fileName) throws FileNotFoundException, IOException {
+		FileOutputStream outFile = new FileOutputStream(fileName);
+		ObjectOutputStream outStream = new ObjectOutputStream(outFile);
+		outStream.writeObject(C);
+		outFile.close();
+	}
+	
+	public String toString() {
+		return C.toString();
 	}
 }

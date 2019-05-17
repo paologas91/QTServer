@@ -1,8 +1,9 @@
 package data;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class Tuple {
+public class Tuple implements Serializable {
 
 	private Item[] tuple; // array di Item
 
@@ -31,7 +32,7 @@ public class Tuple {
 		 */
 		double distance = 0.0;
 		for (int i = 0; i < obj.getLength(); i++) {
-			distance += get(i).distance(obj.get(i).getValue());
+			distance += get(i).distance(obj.get(i));
 		}
 		return distance;
 	}
@@ -50,7 +51,7 @@ public class Tuple {
 	public String toString() {
 		String str = "";
 		for (int i = 0; i < tuple.length; i++) {
-			str += tuple[i].getAttribute() + "=" + tuple[i].getValue() + ",";
+			str += /*tuple[i].getAttribute() + "=" +*/ tuple[i].getValue();
 		}
 		return str;
 	}
