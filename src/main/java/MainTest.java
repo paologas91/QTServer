@@ -58,7 +58,7 @@ public class MainTest {
 					}
 					break;
 				case 2:
-					Data data =new Data();
+					Data data = new Data(Keyboard.readString());
 					System.out.println(data);
 					char answer='y';
 					do{
