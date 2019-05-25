@@ -16,7 +16,7 @@ public class MainTest {
 		int answer;
 		do {
 			System.out.println("(1) Load Clusters from File");
-			System.out.println("(2) Load Data");
+			System.out.println("(2) Load Data from Database");
 			System.out.print("(1/2):");
 			answer = Keyboard.readInt();
 		}
@@ -58,6 +58,7 @@ public class MainTest {
 					}
 					break;
 				case 2:
+					System.out.print("Insert table name: ");
 					Data data = new Data(Keyboard.readString());
 					System.out.println(data);
 					char answer = 'y';
