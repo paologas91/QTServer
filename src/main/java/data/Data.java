@@ -1,9 +1,6 @@
 package data;
 
 import java.util.List;
-
-import org.checkerframework.checker.units.qual.min;
-
 import database.DatabaseConnectionException;
 import database.DbAccess;
 import database.EmptySetException;
@@ -12,10 +9,10 @@ import database.NoValueException;
 import database.QUERY_TYPE;
 import database.TableData;
 import database.TableSchema;
-
 import java.util.LinkedList;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Data {
 
@@ -30,20 +27,28 @@ public class Data {
 			db.initConnection();
 			data = t_data.getDistinctTransazioni(table);
 			TableSchema t_schema = new TableSchema(db, table);
-			numberOfExamples = t_schema.getNumberOfAttributes();
-			for (int i = 0; i < numberOfExamples; i++) {
+			numberOfExamples = data.size();
+
+			for (int i = 0; i < t_schema.getNumberOfAttributes(); i++) {
 				if (t_schema.getColumn(i).isNumber()) {
 					attributeSet.add(new ContinuousAttribute(t_schema.getColumn(i).getColumnName(), i, 
-							(double) t_data.getAggregateColumnValue(table, t_schema.getColumn(i), QUERY_TYPE.MIN), 
-							(double) t_data.getAggregateColumnValue(table, t_schema.getColumn(i), QUERY_TYPE.MAX)));
+							(float) t_data.getAggregateColumnValue(table, t_schema.getColumn(i), QUERY_TYPE.MIN), 
+							(float) t_data.getAggregateColumnValue(table, t_schema.getColumn(i), QUERY_TYPE.MAX)));
 				} else {
-					//attributeSet.add(new DiscreteAttribute(t_schema.getColumn(i).getColumnName(), i, 
-							//t_data.getDistinctColumnValues(table, t_schema.getColumn(i)).getClass()));
-							for (int j = 0; j < t_data.getDistinctColumnValues(table, t_schema.getColumn(i)).size(); j++) {
-								System.out.println(t_data.getDistinctColumnValues(table, t_schema.getColumn(i)).getClass());
-							}
+					Set<Object> results = t_data.getDistinctColumnValues(table, t_schema.getColumn(i));
+					String[] attributes_values = new String[results.size()];
+					int j = 0;
+					for (Object o: results) {
+						attributes_values[j] = (String) o;
+						j++;
+					}
+					attributeSet.add(new DiscreteAttribute(t_schema.getColumn(i).getColumnName(), i, attributes_values));
 				}
 			}
+			System.out.println(" ================= ");
+			System.out.println(attributeSet);
+			System.out.println(" ================= ");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (EmptySetException e) {

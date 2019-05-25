@@ -12,7 +12,6 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	// metodi
 
 	DiscreteAttribute(final String name, final int index, final String[] values) {
-
 		super(name, index);
 		for (String s : values) {
 			this.values.add(s);
@@ -20,12 +19,10 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	}
 
 	public Iterator<String> iterator() {
-
 		return values.iterator();
 	}
 
 	int getNumberOfDistinctValues() {
-
 		return values.size();
 	}
 }

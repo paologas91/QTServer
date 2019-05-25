@@ -21,19 +21,17 @@ abstract class Attribute implements Serializable {
 	/**
 	 * @return nome dell'attributo
 	 */
-
 	String getName() {
 		return name;	// oppure this.name
 	}
 
+	/**
+	 * 
+	 * @return identificativo numerico dell'attributo.
+	 */
 	int getIndex() {
-
 		return index;
 	}
-
-	/*
-	 * evitando di scrivere il toString(), verrà utilizzato quello di default della classe Object
-	 */
 
 	@Override
 	public String toString() {
