@@ -1,15 +1,18 @@
 package data;
 
-public class ContinuousItem extends Item {
-	
-	public ContinuousItem(final Attribute attribute, final double value) {
-		super(attribute, value);
-	}
+/**
+ * modella una cella della tabella contenente un valore continuo.
+ */
 
-	double distance(Object a) {
-		// do I need RTTI?
-		return (double) Math.abs( ((ContinuousAttribute) this.getAttribute()).getScaledValue((double) this.getValue()) - 
-				((ContinuousAttribute) ((Item) a).getAttribute()).getScaledValue((double) ((Item) a).getValue()));
-		// se metto il casta ContinuousItem funziona lo stesso ma qual è meglio dei due?
-	}
+public class ContinuousItem extends Item {
+
+public ContinuousItem(final ContinuousAttribute attribute, final double value) {
+								super(attribute, value);
+}
+
+double distance(Object a) {
+								return (double) Math.abs(((ContinuousAttribute) this.getAttribute()).getScaledValue((double) this.getValue()) -
+																																	((ContinuousAttribute) ((Item) a).getAttribute()).getScaledValue((double) ((Item) a).getValue()));
+
+}
 }
