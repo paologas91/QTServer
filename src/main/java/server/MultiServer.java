@@ -10,7 +10,7 @@ public class MultiServer {
 
 	MultiServer(final int port) {
 		this.port = port;
-		this.run();
+		run();
 	}
 
 	public void run() {
@@ -19,29 +19,25 @@ public class MultiServer {
 			server = new ServerSocket(port);
 			while (true) {
 				System.out.println("Aspetto.....");
-				Socket socket = server.accept();
-				ServerOneClient client = new ServerOneClient(socket);
+				final Socket socket = server.accept();
+				new ServerOneClient(socket);
 				System.out.println("Servito");
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (final IOException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				System.out.println("la vecchia porta");
 				server.close();
 				System.out.println("la sbarra");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
 	public static void main(final String[] args) {
-		MultiServer server = new MultiServer(8080);
-
+		new MultiServer(8080);
 	}
 
 }
