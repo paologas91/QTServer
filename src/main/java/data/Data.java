@@ -1,6 +1,11 @@
 package data;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 import database.DatabaseConnectionException;
 import database.DbAccess;
 import database.EmptySetException;
@@ -9,10 +14,6 @@ import database.NoValueException;
 import database.QUERY_TYPE;
 import database.TableData;
 import database.TableSchema;
-import java.util.LinkedList;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Set;
 
 public class Data {
 
@@ -42,7 +43,9 @@ public class Data {
 						attributes_values[j] = (String) o;
 						j++;
 					}
-					attributeSet.add(new DiscreteAttribute(t_schema.getColumn(i).getColumnName(), i, attributes_values));
+					attributeSet.add(new DiscreteAttribute(t_schema.getColumn(i).getColumnName(), i,
+							t_data.getDistinctColumnValues(table, t_schema.getColumn(i))
+									.toArray(new String[0])));
 				}
 			}
 			System.out.println(" ================= ");
@@ -86,7 +89,7 @@ public class Data {
 			if (attributeSet.get(i) instanceof DiscreteAttribute) {
 				tuple.add(new DiscreteItem((DiscreteAttribute) attributeSet.get(i), (String) data.get(index).get(i)), i);
 			} else {
-				tuple.add(new ContinuousItem((ContinuousAttribute) attributeSet.get(i), (double) data.get(index).get(i)), i); // dubbio
+				tuple.add(new ContinuousItem(attributeSet.get(i), (double) data.get(index).get(i)), i); // dubbio
 			}
 		}
 		return tuple;
