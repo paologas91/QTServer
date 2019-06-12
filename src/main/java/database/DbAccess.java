@@ -69,7 +69,6 @@ public void initConnection() throws DatabaseConnectionException {
 																																																			"&password=" + PASSWORD + "&serverTimezone=UTC");
 								} catch (SQLException e) {
 																throw new DatabaseConnectionException("connessione fallita");
-																e.printStackTrace();
 								}
 }
 
