@@ -1,7 +1,5 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import keyboardinput.Keyboard;
 import mining.ClusteringRadiusException;
 import mining.QTMiner;
@@ -80,10 +78,8 @@ public class MainTest {
 							try {
 								qt.salva(fileName);
 							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							System.out.println("Saving transaction ended!");

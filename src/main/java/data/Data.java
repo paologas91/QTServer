@@ -17,115 +17,124 @@ import database.TableSchema;
 
 public class Data {
 
-private List<Example> data = new ArrayList<Example>();
-private int numberOfExamples;
-private List<Attribute> attributeSet = new LinkedList<Attribute>();
+	private List<Example> data = new ArrayList<Example>();
+	private int numberOfExamples;
+	private List<Attribute> attributeSet = new LinkedList<Attribute>();
 
-/**
- * popola l'attributeSet, data e inizializza numberOfExamples utilizzando tabella del database.
- * @param table nome della tabella.
- */
+	/**
+	 * popola l'attributeSet, data e inizializza numberOfExamples utilizzando
+	 * tabella del database.
+	 * 
+	 * @param table nome della tabella.
+	 */
 
-public Data(final String table) {
+	public Data(final String table) {
 
-								DbAccess db = new DbAccess();
-								TableData t_data = new TableData(db);
+		final DbAccess db = new DbAccess();
+		final TableData t_data = new TableData(db);
 
-								try {
+		try {
 
-																db.initConnection();
-																data = t_data.getDistinctTransazioni(table);
-																TableSchema t_schema = new TableSchema(db, table);
-																numberOfExamples = data.size();
+			db.initConnection();
+			data = t_data.getDistinctTransazioni(table);
+			final TableSchema t_schema = new TableSchema(db, table);
+			numberOfExamples = data.size();
 
-																for (int i = 0; i < t_schema.getNumberOfAttributes(); i++) {
+			for (int i = 0; i < t_schema.getNumberOfAttributes(); i++) {
 
-																								if (t_schema.getColumn(i).isNumber()) {
-																																attributeSet.add(new ContinuousAttribute(t_schema.getColumn(i).getColumnName(), i,
-																																																																									(float) t_data.getAggregateColumnValue(table, t_schema.getColumn(i), QUERY_TYPE.MIN),
-																																																																									(float) t_data.getAggregateColumnValue(table, t_schema.getColumn(i), QUERY_TYPE.MAX)));
-																								} else {
-																																Set<Object> results = t_data.getDistinctColumnValues(table, t_schema.getColumn(i));
-																																String[] attributes_values = new String[results.size()];
-																																int j = 0;
-																																for (Object o: results) {
-																																								attributes_values[j] = (String) o;
-																																								j++;
-																																}
-																																attributeSet.add(new DiscreteAttribute(t_schema.getColumn(i).getColumnName(), i,
-																																																																							t_data.getDistinctColumnValues(table, t_schema.getColumn(i))
-																																																																							.toArray(new String[0])));
-																								}
-																}
-																System.out.println(" ================= ");
-																System.out.println(attributeSet);
-																System.out.println(" ================= ");
+				if (t_schema.getColumn(i).isNumber()) {
+					attributeSet.add(new ContinuousAttribute(t_schema.getColumn(i).getColumnName(),
+							i,
+							(float) t_data.getAggregateColumnValue(table,
+									t_schema.getColumn(i), QUERY_TYPE.MIN),
+							(float) t_data.getAggregateColumnValue(table,
+									t_schema.getColumn(i), QUERY_TYPE.MAX)));
+				} else {
+					final Set<Object> results = t_data.getDistinctColumnValues(table,
+							t_schema.getColumn(i));
+					final String[] attributes_values = new String[results.size()];
+					int j = 0;
+					for (final Object o : results) {
+						attributes_values[j] = (String) o;
+						j++;
+					}
+					attributeSet.add(new DiscreteAttribute(t_schema.getColumn(i).getColumnName(), i,
+							t_data.getDistinctColumnValues(table, t_schema.getColumn(i))
+									.toArray(new String[0])));
+				}
+			}
+			System.out.println(" ================= ");
+			System.out.println(attributeSet);
+			System.out.println(" ================= ");
 
-								} catch (SQLException e) {
-																e.printStackTrace();
-								} catch (EmptySetException e) {
-																e.printStackTrace();
-								} catch (DatabaseConnectionException e) {
-																e.printStackTrace();
-								} catch (NoValueException e) {
-																e.printStackTrace();
-								}
-}
+		} catch (final SQLException e) {
+			e.printStackTrace();
+		} catch (final EmptySetException e) {
+			e.printStackTrace();
+		} catch (final DatabaseConnectionException e) {
+			e.printStackTrace();
+		} catch (final NoValueException e) {
+			e.printStackTrace();
+		}
+	}
 
-public int getNumberOfExamples() {
-								return numberOfExamples;
-}
+	public int getNumberOfExamples() {
+		return numberOfExamples;
+	}
 
-public int getNumberOfAttributes() {
-								return attributeSet.size();
-}
+	public int getNumberOfAttributes() {
+		return attributeSet.size();
+	}
 
-public Object getAttributeValue(final int exampleIndex, final int attributeIndex) {
-								return data.get(exampleIndex).get(attributeIndex);
-}
+	public Object getAttributeValue(final int exampleIndex, final int attributeIndex) {
+		return data.get(exampleIndex).get(attributeIndex);
+	}
 
-public Attribute getAttribute(final int index) {
-								return attributeSet.get(index);
-}
+	public Attribute getAttribute(final int index) {
+		return attributeSet.get(index);
+	}
 
-public List<Attribute> getAttributeSchema() {
-								return attributeSet;
-}
+	public List<Attribute> getAttributeSchema() {
+		return attributeSet;
+	}
 
-public Tuple getItemSet(final int index) {
-								Tuple tuple = new Tuple(attributeSet.size());
-								for (int i = 0; i < attributeSet.size(); i++) {
-																if (attributeSet.get(i) instanceof DiscreteAttribute) {
-																								tuple.add(new DiscreteItem((DiscreteAttribute) attributeSet.get(i), (String) data.get(index).get(i)), i);
-																} else {
-																								tuple.add(new ContinuousItem((ContinuousAttribute) attributeSet.get(i), (double) data.get(index).get(i)), i);
-																}
-								}
-								return tuple;
-}
+	public Tuple getItemSet(final int index) {
+		final Tuple tuple = new Tuple(attributeSet.size());
+		for (int i = 0; i < attributeSet.size(); i++) {
+			if (attributeSet.get(i) instanceof DiscreteAttribute) {
+				tuple.add(new DiscreteItem((DiscreteAttribute) attributeSet.get(i),
+						(String) data.get(index).get(i)), i);
+			} else {
+				tuple.add(new ContinuousItem((ContinuousAttribute) attributeSet.get(i),
+						(double) data.get(index).get(i)), i);
+			}
+		}
+		return tuple;
+	}
 
-@Override
-public String toString() {
-								String s = "";
-								for (int i = 0; i < getNumberOfAttributes(); i++) {
-																// se non avessi ridefinito il toString in Attribute, avrei la stampa di default di Object
-																s += attributeSet.get(i);
-																if (i != getNumberOfAttributes() - 1) {
-																								s += ", ";
-																}
-								}
-								s += '\n';
-								for (int i = 0; i < getNumberOfExamples(); i++) {
-																s += (i + 1) + ":";
-																for (int j = 0; j < getNumberOfAttributes(); j++) {
-																								s += getAttributeValue(i, j);
-																								if (j != getNumberOfAttributes() - 1) {
-																																s += ", ";
-																								}
-																}
-																s += "\n";
-								}
-								return s;
-}
+	@Override
+	public String toString() {
+		String s = "";
+		for (int i = 0; i < getNumberOfAttributes(); i++) {
+			// se non avessi ridefinito il toString in Attribute, avrei la stampa di default
+			// di Object
+			s += attributeSet.get(i);
+			if (i != getNumberOfAttributes() - 1) {
+				s += ", ";
+			}
+		}
+		s += '\n';
+		for (int i = 0; i < getNumberOfExamples(); i++) {
+			s += i + 1 + ":";
+			for (int j = 0; j < getNumberOfAttributes(); j++) {
+				s += getAttributeValue(i, j);
+				if (j != getNumberOfAttributes() - 1) {
+					s += ", ";
+				}
+			}
+			s += "\n";
+		}
+		return s;
+	}
 
 }

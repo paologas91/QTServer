@@ -6,13 +6,15 @@ package data;
 
 public class ContinuousItem extends Item {
 
-public ContinuousItem(final ContinuousAttribute attribute, final double value) {
-								super(attribute, value);
-}
+	public ContinuousItem(final ContinuousAttribute attribute, final double value) {
+		super(attribute, value);
+	}
 
-double distance(Object a) {
-								return (double) Math.abs(((ContinuousAttribute) this.getAttribute()).getScaledValue((double) this.getValue()) -
-																																	((ContinuousAttribute) ((Item) a).getAttribute()).getScaledValue((double) ((Item) a).getValue()));
+	@Override
+	double distance(final Object a) {
+		return (double) Math.abs(((ContinuousAttribute) getAttribute()).getScaledValue((double) getValue())
+				- ((ContinuousAttribute) ((Item) a).getAttribute())
+						.getScaledValue((double) ((Item) a).getValue()));
 
-}
+	}
 }

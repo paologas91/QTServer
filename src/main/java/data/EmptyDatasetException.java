@@ -5,7 +5,7 @@ package data;
  */
 
 public class EmptyDatasetException extends Exception {
-public EmptyDatasetException(final String s) {
-								super(s);
-}
+	public EmptyDatasetException(final String s) {
+		super(s);
+	}
 }
