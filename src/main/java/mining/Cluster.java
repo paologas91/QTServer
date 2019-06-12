@@ -1,19 +1,21 @@
 package mining;
 
-import data.Data;
-import data.Tuple;
-import java.util.Set;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
+
+import data.Data;
+import data.Tuple;
+
+/**
+ * memorizza il centroide e gli indici delle tuple che fanno parte del cluster.
+ */
 
 class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
 
 	private Tuple centroid;
 	private Set<Integer> clusteredData = new HashSet<Integer>();
-
-	/*Cluster(){
-	}*/
 
 	Cluster(final Tuple centroid) {
 		this.centroid = centroid;
@@ -23,17 +25,31 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
 		return centroid;
 	}
 
-	//return true if the tuple is changing cluster
+	/**
+	 * aggiunge una tupla.
+	 * 
+	 * @param id da inserire in clusteredData.
+	 * @return true se la tupla è stata inserita.
+	 */
 	boolean addData(final int id) {
 		return clusteredData.add(id);
 	}
 
-	//verifica se una transazione � clusterizzata nell'array corrente
+	/**
+	 * verifica se una transazione è clusterizzata nell'array corrente.
+	 * 
+	 * @param id della tupla di cui si vuole effettuare la verifica.
+	 * @return true se è contenuta.
+	 */
 	boolean contain(final int id) {
-		return clusteredData.contains(id);  // oppure (Integer(id)) ????
+		return clusteredData.contains(id); // oppure (Integer(id)) ????
 	}
 
-	//remove the tuple that has changed the cluster
+	/**
+	 * rimuove la tupla che ha cambiato il cluster.
+	 * 
+	 * @param id della tupla da rimuovere.
+	 */
 	void removeTuple(final int id) {
 		clusteredData.remove(id);
 	}
@@ -42,6 +58,7 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
 		return clusteredData.size();
 	}
 
+	@Override
 	public Iterator<Integer> iterator() {
 		return clusteredData.iterator();
 	}
@@ -55,12 +72,12 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
 		str += ")";
 		return str;
 	}
-	
-	public int compareTo(Cluster c) {
-		if (this.getSize() > c.getSize()) {
+
+	@Override
+	public int compareTo(final Cluster c) {
+		if (getSize() > c.getSize()) {
 			return 1;
-		}
-		else {
+		} else {
 			return -1;
 		}
 	}
@@ -71,7 +88,7 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
 			str += centroid.get(i) + " ";
 		}
 		str += ")\nExamples:\n";
-		for (Integer i : clusteredData) {
+		for (final Integer i : clusteredData) {
 			str += "[";
 			for (int j = 0; j < data.getNumberOfAttributes(); j++) {
 				str += data.getAttributeValue(i, j) + " ";

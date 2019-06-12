@@ -3,6 +3,11 @@ package data;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * modella una tupla della tabella fornendo metodi per il confronto con altre
+ * tuple.
+ */
+
 public class Tuple implements Serializable {
 
 	private Item[] tuple; // array di Item
@@ -26,7 +31,7 @@ public class Tuple implements Serializable {
 	public double getDistance(final Tuple obj) {
 		/*
 		 * Comportamento: determina la distanza tra la tupla riferita da obj e la tupla
-		 * corrente (riferita da this). La distanza è ottenuta come la somma delle
+		 * corrente (riferita da this). La distanza ï¿½ ottenuta come la somma delle
 		 * distanze tra gli item in posizioni eguali nelle due tuple. Fare uso di double
 		 * distance(Object a) di Item
 		 */
@@ -39,8 +44,8 @@ public class Tuple implements Serializable {
 
 	public double avgDistance(final Data data, final Set<Integer> clusteredData) {
 		double p = 0.0, sumD = 0.0;
-		for (Integer i : clusteredData) {
-			double d = getDistance(data.getItemSet(i));
+		for (final Integer i : clusteredData) {
+			final double d = getDistance(data.getItemSet(i));
 			sumD += d;
 		}
 		p = sumD / clusteredData.size();
@@ -51,7 +56,7 @@ public class Tuple implements Serializable {
 	public String toString() {
 		String str = "";
 		for (int i = 0; i < tuple.length; i++) {
-			str += /*tuple[i].getAttribute() + "=" +*/ tuple[i].getValue();
+			str += tuple[i].getValue();
 		}
 		return str;
 	}

@@ -2,6 +2,10 @@ package data;
 
 import java.io.Serializable;
 
+/**
+ * Modella una colonna della tabella del Database.
+ */
+
 abstract class Attribute implements Serializable {
 
 	private String name;
@@ -9,11 +13,12 @@ abstract class Attribute implements Serializable {
 
 	/**
 	 * Inizializza i valori dei membri name, index.
-	 * @param name nome dell'attributo.
+	 * 
+	 * @param name  nome dell'attributo.
 	 * @param index identificativo numerico dell'attributo.
 	 */
 
-	Attribute(final String name, final int index) {		// la classe è astratta pertanto non può essere public
+	Attribute(final String name, final int index) { // la classe ï¿½ astratta pertanto non puï¿½ essere public
 		this.name = name;
 		this.index = index;
 	}
@@ -22,11 +27,11 @@ abstract class Attribute implements Serializable {
 	 * @return nome dell'attributo
 	 */
 	String getName() {
-		return name;	// oppure this.name
+		return name; // oppure this.name
 	}
 
 	/**
-	 * 
+	 *
 	 * @return identificativo numerico dell'attributo.
 	 */
 	int getIndex() {

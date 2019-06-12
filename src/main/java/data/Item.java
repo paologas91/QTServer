@@ -2,31 +2,35 @@ package data;
 
 import java.io.Serializable;
 
+/**
+ * modella una cella della tabella contenente un valore (continuo o discreto).
+ */
+
 abstract class Item implements Serializable {
 
-	private Attribute attribute;
-	private Object value;
+private Attribute attribute;
+private Object value;
 
-	Item(final Attribute attribute, final Object value) {
+Item(final Attribute attribute, final Object value) {
 
-		this.attribute = attribute;
-		this.value = value;
-	}
+								this.attribute = attribute;
+								this.value = value;
+}
 
-	Attribute getAttribute() {
+Attribute getAttribute() {
 
-		return attribute;
-	}
+								return attribute;
+}
 
-	Object getValue() {
+Object getValue() {
 
-		return value;
-	}
+								return value;
+}
 
-	public String toString() {
+public String toString() {
 
-		return value.toString();
-	}
+								return value.toString();
+}
 
-	abstract double distance(Object a);
+abstract double distance(Object a);
 }
