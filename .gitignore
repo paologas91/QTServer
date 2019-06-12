@@ -5,6 +5,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+*.dmp
 local.properties
 
 # Eclipse project file
@@ -44,3 +45,4 @@ local.properties
 /build/libs
 #/build/scripts
 #/build/test-results
+/build/
