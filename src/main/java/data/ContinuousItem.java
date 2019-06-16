@@ -6,13 +6,19 @@ package data;
 
 public class ContinuousItem extends Item {
 
+	/**
+	 * Inizializza i valori dei membri attribute e value.
+	 * 
+	 * @param attribute
+	 * @param value
+	 */
 	public ContinuousItem(final ContinuousAttribute attribute, final double value) {
 		super(attribute, value);
 	}
 
 	@Override
 	double distance(final Object a) {
-		return (double) Math.abs(((ContinuousAttribute) getAttribute()).getScaledValue((double) getValue())
+		return Math.abs(((ContinuousAttribute) getAttribute()).getScaledValue((double) getValue())
 				- ((ContinuousAttribute) ((Item) a).getAttribute())
 						.getScaledValue((double) ((Item) a).getValue()));
 
