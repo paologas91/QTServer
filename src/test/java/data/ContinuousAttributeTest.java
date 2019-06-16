@@ -1,16 +1,17 @@
-import static org.junit.jupiter.api.Assertions.*;
+package data;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach; 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 class ContinuousAttributeTest {
 
+
+
 	@Test
-	void test() {
-		asserEqual(1,1);
+	void testGetScaledValue() {
+		ContinuousAttribute att = new ContinuousAttribute("ciao", 0, 0, 2);
+		assertEquals(0.5, att.getScaledValue(1));
 	}
 
 }
