@@ -4,9 +4,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import data.Data;
 import data.EmptyDatasetException;
+import database.DatabaseConnectionException;
+import database.DbAccess;
 import mining.ClusteringRadiusException;
 import mining.QTMiner;
 
@@ -33,7 +41,7 @@ public class ServerOneClient extends Thread {
 			while (true) {
 				System.out.println("in attesa del operazione");
 				final int operation = (int) in.readObject();
-				System.out.println(operation);
+				System.out.println("scelta operazione numero: " + operation);
 				switch (operation) {
 				case 0:
 					tabName = (String) in.readObject();
@@ -56,9 +64,32 @@ public class ServerOneClient extends Thread {
 				case 3:
 					final String file = (String) in.readObject() + "_" + (double) in.readObject()
 							+ ".dmp";
+					System.out.println(file);
 					qt = new QTMiner(file);
+					out.writeObject("OK");
+					System.out.println(qt);
 					out.writeObject(qt.toString());
 					break;
+				case 4:
+					DbAccess db = new DbAccess();
+					LinkedList<String> tables = new LinkedList<String>();
+					try {
+						db.initConnection();
+						Connection c = db.getConnection();
+						Statement s = c.createStatement();
+						ResultSet r = s.executeQuery("show tables");
+						while (r.next()) {
+							tables.add(r.getString(1));
+						}
+						out.writeObject(tables);
+						s.close();
+					} catch (DatabaseConnectionException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} finally {
+						db.closeConnection();
+					}
 				default:
 					;
 				}
