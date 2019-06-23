@@ -1,5 +1,6 @@
 package server;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -97,6 +98,13 @@ public class ServerOneClient extends Thread {
 					break;
 				}
 			}
+		} catch (final FileNotFoundException e) {
+			try {
+				out.writeObject("filenotfound");
+			} catch (final IOException e1) {
+				e1.printStackTrace();
+			}
+
 		} catch (final IOException e) {
 			e.printStackTrace();
 		} catch (final ClassNotFoundException e) {
