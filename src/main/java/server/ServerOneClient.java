@@ -27,9 +27,11 @@ public class ServerOneClient extends Thread {
 	private ObjectOutputStream out;
 	private QTMiner qt;
 
+	private static final String OK = "ok";
+
 	/**
 	 * Inizializza la socket e gli stream.
-	 * 
+	 *
 	 * @param s socket
 	 * @throws IOException
 	 */
@@ -56,26 +58,26 @@ public class ServerOneClient extends Thread {
 				case 0:
 					tabName = (String) in.readObject();
 					data = new Data(tabName);
-					out.writeObject("OK");
+					out.writeObject(OK);
 					break;
 				case 1:
 					radius = (Double) in.readObject();
 					qt = new QTMiner(radius);
 					final int num = qt.compute(data);
-					out.writeObject("OK");
+					out.writeObject(OK);
 					out.writeObject(num);
 					out.writeObject(qt.toString());
 					break;
 				case 2:
 					qt.salva(tabName + "_" + radius + ".dmp");
-					out.writeObject("OK");
+					out.writeObject(OK);
 					break;
 				case 3:
 					final String file = (String) in.readObject() + "_" + (double) in.readObject()
 							+ ".dmp";
 					System.out.println(file);
 					qt = new QTMiner(file);
-					out.writeObject("OK");
+					out.writeObject(OK);
 					System.out.println(qt);
 					out.writeObject(qt.toString());
 					break;
@@ -92,9 +94,7 @@ public class ServerOneClient extends Thread {
 						}
 						out.writeObject(tables);
 						s.close();
-					} catch (final DatabaseConnectionException e) {
-						e.printStackTrace();
-					} catch (final SQLException e) {
+					} catch (final DatabaseConnectionException | SQLException e) {
 						e.printStackTrace();
 					} finally {
 						db.closeConnection();
@@ -114,9 +114,7 @@ public class ServerOneClient extends Thread {
 				e1.printStackTrace();
 			}
 
-		} catch (final IOException e) {
-			e.printStackTrace();
-		} catch (final ClassNotFoundException e) {
+		} catch (final IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (final ClusteringRadiusException e) {
 

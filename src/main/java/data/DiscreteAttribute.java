@@ -1,5 +1,6 @@
 package data;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -23,9 +24,7 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	 */
 	DiscreteAttribute(final String name, final int index, final String[] values) {
 		super(name, index);
-		for (final String s : values) {
-			this.values.add(s);
-		}
+		this.values.addAll(Arrays.asList(values));
 	}
 
 	@Override

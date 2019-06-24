@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class TableSchema {
 
-	private DbAccess db;
 	private List<Column> tableSchema = new ArrayList<Column>();
 
 	/**
@@ -47,7 +46,6 @@ public class TableSchema {
 
 
 	public TableSchema(final DbAccess db, final String tableName) throws SQLException {
-		this.db = db;
 		final HashMap<String, String> mapSQL_JAVATypes = new HashMap<String, String>();
 		// http://java.sun.com/j2se/1.3/docs/guide/jdbc/getstart/mapping.html
 		mapSQL_JAVATypes.put("CHAR", "string");
@@ -60,7 +58,7 @@ public class TableSchema {
 		mapSQL_JAVATypes.put("FLOAT", "number");
 		mapSQL_JAVATypes.put("DOUBLE", "number");
 
-		final Connection con = this.db.getConnection();
+		final Connection con = db.getConnection();
 		final DatabaseMetaData meta = con.getMetaData();
 		final ResultSet res = meta.getColumns(null, null, tableName, null);
 

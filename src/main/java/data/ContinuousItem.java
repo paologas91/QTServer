@@ -4,7 +4,7 @@ package data;
  * modella una cella della tabella contenente un valore continuo.
  */
 
-public class ContinuousItem extends Item {
+class ContinuousItem extends Item {
 
 	/**
 	 * Inizializza i valori dei membri attribute e value.
@@ -12,7 +12,7 @@ public class ContinuousItem extends Item {
 	 * @param attribute Attributo componente dell' item
 	 * @param value     Valore dell' item
 	 */
-	public ContinuousItem(final ContinuousAttribute attribute, final double value) {
+	ContinuousItem(final ContinuousAttribute attribute, final double value) {
 		super(attribute, value);
 	}
 

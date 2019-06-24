@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
 import database.DatabaseConnectionException;
 import database.DbAccess;
 import database.EmptySetException;
@@ -53,14 +51,6 @@ public class Data {
 							(float) tData.getAggregateColumnValue(table,
 									tSchema.getColumn(i), QUERY_TYPE.MAX)));
 				} else {
-					final Set<Object> results = tData.getDistinctColumnValues(table,
-							tSchema.getColumn(i));
-					final String[] attributesValues = new String[results.size()];
-					int j = 0;
-					for (final Object o : results) {
-						attributesValues[j] = (String) o;
-						j++;
-					}
 					attributeSet.add(new DiscreteAttribute(tSchema.getColumn(i).getColumnName(), i,
 							tData.getDistinctColumnValues(table, tSchema.getColumn(i))
 									.toArray(new String[0])));
@@ -70,13 +60,8 @@ public class Data {
 			System.out.println(attributeSet);
 			System.out.println(" ================= ");
 
-		} catch (final SQLException e) {
-			e.printStackTrace();
-		} catch (final EmptySetException e) {
-			e.printStackTrace();
-		} catch (final DatabaseConnectionException e) {
-			e.printStackTrace();
-		} catch (final NoValueException e) {
+		} catch (final SQLException | EmptySetException | DatabaseConnectionException | NoValueException e ) {
+		    System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
