@@ -4,25 +4,30 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class MultiServer {
+public class MultiServer implements Runnable {
 
 	private int port = 8080;
+	private boolean running;
+	ServerSocket server;
 
-	MultiServer(final int port) {
+	public MultiServer(final int port) {
 		this.port = port;
-		run();
+		running = true;
+		// run();
 	}
 
+	@Override
 	public void run() {
-		ServerSocket server = null;
+		// ServerSocket server = null;
 		try {
 			server = new ServerSocket(port);
-			while (true) {
+			while (running) {
 				System.out.println("Aspetto.....");
 				final Socket socket = server.accept();
 				new ServerOneClient(socket);
 				System.out.println("Servito");
 			}
+			System.out.println("Sto chiudendo....");
 		} catch (final IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -34,6 +39,10 @@ public class MultiServer {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void close() {
+		running = false;
 	}
 
 	public static void main(final String[] args) {
