@@ -17,7 +17,6 @@ abstract class Attribute implements Serializable {
 	 * @param name  nome dell'attributo.
 	 * @param index identificativo numerico dell'attributo.
 	 */
-
 	Attribute(final String name, final int index) { // la classe � astratta pertanto non pu� essere public
 		this.name = name;
 		this.index = index;

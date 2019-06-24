@@ -45,7 +45,7 @@ public class DbAccess {
 	 */
 	private Connection conn;
 
-// METODI
+	// METODI
 
 	/**
 	 * Impartisce al class loader l�ordine di caricare il driver mysql,

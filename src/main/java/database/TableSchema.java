@@ -17,7 +17,7 @@ public class TableSchema {
 	DbAccess db;
 	List<Column> tableSchema = new ArrayList<Column>();
 
-// inner class
+	// inner class
 	public class Column {
 		private String name;
 		private String type;
@@ -41,7 +41,7 @@ public class TableSchema {
 		}
 	}
 
-// constructor
+	// constructor
 	public TableSchema(final DbAccess db, final String tableName) throws SQLException {
 		this.db = db;
 		final HashMap<String, String> mapSQL_JAVATypes = new HashMap<String, String>();

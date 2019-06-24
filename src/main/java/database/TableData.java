@@ -12,15 +12,15 @@ import database.TableSchema.Column;
 
 public class TableData {
 
-// attributes
+	// attributes
 	DbAccess db;
 
-// constructor
+	// constructor
 	public TableData(final DbAccess db) {
 		this.db = db;
 	}
 
-// methods
+	// methods
 	/**
 	 * popola una List<Example> con le tuple della tabella del database.
 	 * 

@@ -9,11 +9,11 @@ import java.util.TreeSet;
 
 class DiscreteAttribute extends Attribute implements Iterable<String> {
 
-// attributi d'istanza
+	// attributi d'istanza
 
 	private TreeSet<String> values = new TreeSet<String>();
 
-// metodi
+	// metodi
 
 	DiscreteAttribute(final String name, final int index, final String[] values) {
 		super(name, index);
