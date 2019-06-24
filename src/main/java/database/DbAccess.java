@@ -45,14 +45,13 @@ public class DbAccess {
 	 */
 	private Connection conn;
 
-
 	/**
 	 * Impartisce al class loader l' ordine di caricare il driver mysql, inizializza
 	 * la connessione riferita da conn. Il metodo solleva e propaga una eccezione di
 	 * tipo DatabaseConnectionException in caso di fallimento nella connessione al
 	 * database.
-	 * 
-	 * @throws DatabaseConnectionException
+	 *
+	 * @throws DatabaseConnectionException problemi di connessione al database
 	 */
 	public void initConnection() throws DatabaseConnectionException {
 		try {
@@ -74,7 +73,7 @@ public class DbAccess {
 
 	/**
 	 * Restituisce la connessione.
-	 * 
+	 *
 	 * @return conn
 	 */
 	public Connection getConnection() {

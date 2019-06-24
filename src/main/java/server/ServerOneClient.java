@@ -15,6 +15,7 @@ import data.Data;
 import data.EmptyDatasetException;
 import database.DatabaseConnectionException;
 import database.DbAccess;
+import database.EmptySetException;
 import mining.ClusteringRadiusException;
 import mining.QTMiner;
 
@@ -126,7 +127,7 @@ public class ServerOneClient extends Thread {
 
 			e.printStackTrace();
 
-		} catch (final EmptyDatasetException e) {
+		} catch (final EmptyDatasetException | EmptySetException e) {
 
 			try {
 				out.writeObject("empty");

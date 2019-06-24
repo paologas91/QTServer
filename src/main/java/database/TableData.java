@@ -28,7 +28,7 @@ public class TableData {
 	}
 
 	/**
-	 * popola una List<Example> con le tuple della tabella del database.
+	 * popola una List di Example con le tuple della tabella del database.
 	 *
 	 * @param table nome della tabella nel database.
 	 * @return Lista di transazioni distinte memorizzate nella tabella.

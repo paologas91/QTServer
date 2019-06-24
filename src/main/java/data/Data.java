@@ -30,7 +30,7 @@ public class Data {
 	 * @param table nome della tabella.
 	 */
 
-	public Data(final String table) {
+	public Data(final String table) throws EmptySetException {
 
 		final DbAccess db = new DbAccess();
 		final TableData tData = new TableData(db);
@@ -61,7 +61,7 @@ public class Data {
 			System.out.println(attributeSet);
 			System.out.println(" ================= ");
 
-		} catch (final SQLException | EmptySetException | DatabaseConnectionException | NoValueException e) {
+		} catch (final SQLException | DatabaseConnectionException | NoValueException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
