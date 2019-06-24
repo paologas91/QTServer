@@ -55,9 +55,10 @@ public class Tuple implements Serializable {
 	@Override
 	public String toString() {
 		String str = "";
-		for (int i = 0; i < tuple.length; i++) {
-			str += tuple[i].getValue();
+		for (int i = 0; i < tuple.length - 1; i++) {
+			str += tuple[i].getValue() + ", ";
 		}
+		str += tuple[tuple.length - 1].getValue();
 		return str;
 	}
 }
