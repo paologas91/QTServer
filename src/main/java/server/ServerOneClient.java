@@ -18,12 +18,21 @@ import database.DbAccess;
 import mining.ClusteringRadiusException;
 import mining.QTMiner;
 
+/**
+ * Gestisce la comunicazione con il client.
+ */
 public class ServerOneClient extends Thread {
 	private Socket socket;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private QTMiner qt;
 
+	/**
+	 * Inizializza la socket e gli stream.
+	 * 
+	 * @param s socket
+	 * @throws IOException
+	 */
 	public ServerOneClient(final Socket s) throws IOException {
 		socket = s;
 		out = new ObjectOutputStream(socket.getOutputStream());
@@ -36,10 +45,10 @@ public class ServerOneClient extends Thread {
 		Data data = null;
 		String tabName = "";
 		Double radius = null;
-		Boolean cicle = true;
+		boolean cicle = true;
 
 		try {
-			while (cicle == true) {
+			while (cicle) {
 				System.out.println("in attesa dell'operazione");
 				final int operation = (int) in.readObject();
 				System.out.println("scelta operazione numero: " + operation);

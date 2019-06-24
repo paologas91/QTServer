@@ -9,13 +9,19 @@ public class ContinuousItem extends Item {
 	/**
 	 * Inizializza i valori dei membri attribute e value.
 	 * 
-	 * @param attribute
-	 * @param value
+	 * @param attribute Attributo componente dell' item
+	 * @param value     Valore dell' item
 	 */
 	public ContinuousItem(final ContinuousAttribute attribute, final double value) {
 		super(attribute, value);
 	}
 
+	/**
+	 * Calcola la distanza tra due ContinuousItem.
+	 * 
+	 * @param a ContinuousItem da cui calcola la distanza
+	 * @return la distanza
+	 */
 	@Override
 	double distance(final Object a) {
 		return Math.abs(((ContinuousAttribute) getAttribute()).getScaledValue((double) getValue())

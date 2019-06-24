@@ -5,14 +5,18 @@ package data;
  */
 
 class DiscreteItem extends Item {
-
+	/**
+	 * Costruisce un DiscreteItem.
+	 * 
+	 * @param attribute attributo dell' item
+	 * @param value     valore dell' item
+	 */
 	DiscreteItem(final DiscreteAttribute attribute, final String value) {
 		super(attribute, value);
 	}
 
 	@Override
 	double distance(final Object a) {
-		// se non metto il toString() fallisce sempre il confronto
 		if (getValue().equals(((Item) a).getValue())) {
 			return 0.0;
 		} else {

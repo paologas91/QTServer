@@ -10,17 +10,23 @@ import java.util.TreeSet;
 
 import database.TableSchema.Column;
 
+/**
+ * Recupera i dati dal database.
+ *
+ */
 public class TableData {
 
-	// attributes
-	DbAccess db;
+	private DbAccess db;
 
-	// constructor
+	/**
+	 * Inizializza db.
+	 * 
+	 * @param db gestore accesso al DB
+	 */
 	public TableData(final DbAccess db) {
 		this.db = db;
 	}
 
-	// methods
 	/**
 	 * popola una List<Example> con le tuple della tabella del database.
 	 * 

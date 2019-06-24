@@ -20,6 +20,11 @@ public class QTMiner {
 	private ClusterSet C;
 	private double radius;
 
+	/**
+	 * Crea un nuovo ClusterSet e assegna il raggio.
+	 * 
+	 * @param radius raggio dei cluster
+	 */
 	public QTMiner(final double radius) {
 		C = new ClusterSet();
 		this.radius = radius;
@@ -29,6 +34,9 @@ public class QTMiner {
 	 * carica da file un ClusterSet salvato.
 	 * 
 	 * @param fileName percorso + nome file
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @throws FileNotFoundException
 	 */
 	public QTMiner(final String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
 		final FileInputStream inFile = new FileInputStream(fileName);
@@ -87,14 +95,14 @@ public class QTMiner {
 
 	/**
 	 * Costruisce un cluster per ciascuna tupla di data non ancora clusterizzata in
-	 * un cluster di C e restituisce il cluster candidato piÃ¹ popoloso
+	 * un cluster di C e restituisce il cluster candidato più popoloso.
 	 * 
 	 * @param data        dataSet contenente i dati da clusterizzare.
-	 * @param isClustered array di booleani che indica quali tuple sono state giÃ 
+	 * @param isClustered array di booleani che indica quali tuple sono state già
 	 *                    clusterizzate
-	 * @return
+	 * @return il cluster candidato
 	 */
-	Cluster buildCandidateCluster(final Data data, final boolean isClustered[]) {
+	private Cluster buildCandidateCluster(final Data data, final boolean[] isClustered) {
 
 		final Set<Cluster> C = new TreeSet<Cluster>();
 		for (int i = 0; i < data.getNumberOfExamples(); i++) {
@@ -114,9 +122,11 @@ public class QTMiner {
 	}
 
 	/**
-	 * serializza il ClusterSet su file
+	 * serializza il ClusterSet su file.
 	 * 
 	 * @param fileName nome del file su cui salvare il ClusterSet.
+	 * @throws FileNotFoundException
+	 * @throws IOException
 	 */
 
 	public void salva(final String fileName) throws FileNotFoundException, IOException {

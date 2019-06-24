@@ -17,6 +17,11 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
 	private Tuple centroid;
 	private Set<Integer> clusteredData = new HashSet<Integer>();
 
+	/**
+	 * Assegna il centroide al cluster.
+	 * 
+	 * @param centroid tupla centrale del cluster
+	 */
 	Cluster(final Tuple centroid) {
 		this.centroid = centroid;
 	}

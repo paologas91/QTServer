@@ -15,6 +15,9 @@ import database.QUERY_TYPE;
 import database.TableData;
 import database.TableSchema;
 
+/**
+ * modella una tebella del database.
+ */
 public class Data {
 
 	private List<Example> data = new ArrayList<Example>();
@@ -31,35 +34,35 @@ public class Data {
 	public Data(final String table) {
 
 		final DbAccess db = new DbAccess();
-		final TableData t_data = new TableData(db);
+		final TableData tData = new TableData(db);
 
 		try {
 
 			db.initConnection();
-			data = t_data.getDistinctTransazioni(table);
-			final TableSchema t_schema = new TableSchema(db, table);
+			data = tData.getDistinctTransazioni(table);
+			final TableSchema tSchema = new TableSchema(db, table);
 			numberOfExamples = data.size();
 
-			for (int i = 0; i < t_schema.getNumberOfAttributes(); i++) {
+			for (int i = 0; i < tSchema.getNumberOfAttributes(); i++) {
 
-				if (t_schema.getColumn(i).isNumber()) {
-					attributeSet.add(new ContinuousAttribute(t_schema.getColumn(i).getColumnName(),
+				if (tSchema.getColumn(i).isNumber()) {
+					attributeSet.add(new ContinuousAttribute(tSchema.getColumn(i).getColumnName(),
 							i,
-							(float) t_data.getAggregateColumnValue(table,
-									t_schema.getColumn(i), QUERY_TYPE.MIN),
-							(float) t_data.getAggregateColumnValue(table,
-									t_schema.getColumn(i), QUERY_TYPE.MAX)));
+							(float) tData.getAggregateColumnValue(table,
+									tSchema.getColumn(i), QUERY_TYPE.MIN),
+							(float) tData.getAggregateColumnValue(table,
+									tSchema.getColumn(i), QUERY_TYPE.MAX)));
 				} else {
-					final Set<Object> results = t_data.getDistinctColumnValues(table,
-							t_schema.getColumn(i));
-					final String[] attributes_values = new String[results.size()];
+					final Set<Object> results = tData.getDistinctColumnValues(table,
+							tSchema.getColumn(i));
+					final String[] attributesValues = new String[results.size()];
 					int j = 0;
 					for (final Object o : results) {
-						attributes_values[j] = (String) o;
+						attributesValues[j] = (String) o;
 						j++;
 					}
-					attributeSet.add(new DiscreteAttribute(t_schema.getColumn(i).getColumnName(), i,
-							t_data.getDistinctColumnValues(table, t_schema.getColumn(i))
+					attributeSet.add(new DiscreteAttribute(tSchema.getColumn(i).getColumnName(), i,
+							tData.getDistinctColumnValues(table, tSchema.getColumn(i))
 									.toArray(new String[0])));
 				}
 			}
@@ -78,6 +81,7 @@ public class Data {
 		}
 	}
 
+
 	public int getNumberOfExamples() {
 		return numberOfExamples;
 	}
@@ -86,10 +90,24 @@ public class Data {
 		return attributeSet.size();
 	}
 
+	/**
+	 * Restituisce il valore dell' attributi alla riga exampleIndex e colonna
+	 * attributeIndex.
+	 * 
+	 * @param exampleIndex   riga
+	 * @param attributeIndex colonna
+	 * @return valore
+	 */
 	public Object getAttributeValue(final int exampleIndex, final int attributeIndex) {
 		return data.get(exampleIndex).get(attributeIndex);
 	}
 
+	/**
+	 * Restituisce l' attributo in posizione index.
+	 * 
+	 * @param index indice dell' attributo
+	 * @return l' attributo
+	 */
 	public Attribute getAttribute(final int index) {
 		return attributeSet.get(index);
 	}
@@ -98,6 +116,12 @@ public class Data {
 		return attributeSet;
 	}
 
+	/**
+	 * Restituisce la tupla all' indice index.
+	 * 
+	 * @param index indice di riga
+	 * @return tupla
+	 */
 	public Tuple getItemSet(final int index) {
 		final Tuple tuple = new Tuple(attributeSet.size());
 		for (int i = 0; i < attributeSet.size(); i++) {
@@ -111,6 +135,7 @@ public class Data {
 		}
 		return tuple;
 	}
+
 
 	@Override
 	public String toString() {

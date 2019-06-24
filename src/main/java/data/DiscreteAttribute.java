@@ -14,7 +14,13 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	private TreeSet<String> values = new TreeSet<String>();
 
 	// metodi
-
+	/**
+	 * Costruisce un DiscreteAttribute.
+	 * 
+	 * @param name   nome dell' attributo
+	 * @param index  indice dell' attributo
+	 * @param values possibili valori dell' attributo
+	 */
 	DiscreteAttribute(final String name, final int index, final String[] values) {
 		super(name, index);
 		for (final String s : values) {

@@ -4,21 +4,28 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Gestisce le richieste dei client delegando la gestione della singola
+ * richiesta a ServerOneClient.
+ */
 public class MultiServer implements Runnable {
 
 	private int port = 8080;
 	private boolean running;
-	ServerSocket server;
 
+	/**
+	 * Inizializza la porta.
+	 * 
+	 * @param port numero di porta su cui il server è in ascolto
+	 */
 	public MultiServer(final int port) {
 		this.port = port;
 		running = true;
-		// run();
 	}
 
 	@Override
 	public void run() {
-		// ServerSocket server = null;
+		ServerSocket server = null;
 		try {
 			server = new ServerSocket(port);
 			while (running) {
@@ -41,12 +48,15 @@ public class MultiServer implements Runnable {
 		}
 	}
 
+	/**
+	 * Impedisce di accettare ulteriori connessioni per poi chiudere il server.
+	 */
 	public void close() {
 		running = false;
 	}
 
 	public static void main(final String[] args) {
-		new MultiServer(8080);
+		new Thread(new MultiServer(8080)).start();
 	}
 
 }

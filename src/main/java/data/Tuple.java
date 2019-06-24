@@ -12,6 +12,11 @@ public class Tuple implements Serializable {
 
 	private Item[] tuple; // array di Item
 
+	/**
+	 * Costruisce una tupla vuota di dimensione size.
+	 * 
+	 * @param size dimensione della tupla
+	 */
 	Tuple(final int size) {
 		tuple = new Item[size];
 	}
@@ -20,14 +25,34 @@ public class Tuple implements Serializable {
 		return tuple.length;
 	}
 
+	/**
+	 * Restituisce l' item in posizione i.
+	 * 
+	 * @param i posizione dell item
+	 * @return l'item
+	 */
 	public Item get(final int i) {
 		return tuple[i];
 	}
 
+	/**
+	 * Inserisce l'item c in posizione i.
+	 * 
+	 * @param c item da inserire
+	 * @param i posizione
+	 */
 	void add(final Item c, final int i) {
 		tuple[i] = c;
 	}
 
+	/**
+	 * Restituisce la distanza tra la tupla corrente e obj. La distanza è ottenuta
+	 * come la somma delle distanze tra gli item in posizioni eguali nelle due
+	 * tuple.
+	 * 
+	 * @param obj tupla da cui calcolare la distanza
+	 * @return la distanza
+	 */
 	public double getDistance(final Tuple obj) {
 		/*
 		 * Comportamento: determina la distanza tra la tupla riferita da obj e la tupla
@@ -42,6 +67,13 @@ public class Tuple implements Serializable {
 		return distance;
 	}
 
+	/**
+	 * Calcola la distanza media tra la tupla corrente e le tuple clusterizzate.
+	 * 
+	 * @param data          Tabella contenente tutte le tuple
+	 * @param clusteredData insieme degli indici delle tuple clusterizzate
+	 * @return la distanza media
+	 */
 	public double avgDistance(final Data data, final Set<Integer> clusteredData) {
 		double p = 0.0, sumD = 0.0;
 		for (final Integer i : clusteredData) {

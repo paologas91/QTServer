@@ -11,10 +11,21 @@ public class Example implements Comparable<Example> {
 
 	private List<Object> example = new ArrayList<Object>();
 
+	/**
+	 * Aggiunge un oggetto alla lista.
+	 * 
+	 * @param o oggetto da aggiungere
+	 */
 	public void add(final Object o) {
 		example.add(o);
 	}
 
+	/**
+	 * Restituisce l' oggetto in posizione i.
+	 * 
+	 * @param i posizione
+	 * @return oggetto
+	 */
 	public Object get(final int i) {
 		return example.get(i);
 	}

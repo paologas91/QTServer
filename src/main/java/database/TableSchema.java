@@ -14,10 +14,14 @@ import java.util.List;
  */
 public class TableSchema {
 
-	DbAccess db;
-	List<Column> tableSchema = new ArrayList<Column>();
+	private DbAccess db;
+	private List<Column> tableSchema = new ArrayList<Column>();
 
-	// inner class
+	/**
+	 * Modella una colonna della tabella. contiene il tipo del dato e il nome della
+	 * colonna.
+	 *
+	 */
 	public class Column {
 		private String name;
 		private String type;
@@ -41,7 +45,7 @@ public class TableSchema {
 		}
 	}
 
-	// constructor
+
 	public TableSchema(final DbAccess db, final String tableName) throws SQLException {
 		this.db = db;
 		final HashMap<String, String> mapSQL_JAVATypes = new HashMap<String, String>();
@@ -56,7 +60,7 @@ public class TableSchema {
 		mapSQL_JAVATypes.put("FLOAT", "number");
 		mapSQL_JAVATypes.put("DOUBLE", "number");
 
-		final Connection con = db.getConnection();
+		final Connection con = this.db.getConnection();
 		final DatabaseMetaData meta = con.getMetaData();
 		final ResultSet res = meta.getColumns(null, null, tableName, null);
 
@@ -73,6 +77,12 @@ public class TableSchema {
 		return tableSchema.size();
 	}
 
+	/**
+	 * Restituisce la colonna all' indice index.
+	 * 
+	 * @param index posizione della colonna
+	 * @return la colonna
+	 */
 	public Column getColumn(final int index) {
 		return tableSchema.get(index);
 	}
