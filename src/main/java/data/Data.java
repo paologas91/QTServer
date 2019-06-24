@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import database.DatabaseConnectionException;
 import database.DbAccess;
 import database.EmptySetException;
@@ -25,7 +26,7 @@ public class Data {
 	/**
 	 * popola l'attributeSet, data e inizializza numberOfExamples utilizzando
 	 * tabella del database.
-	 * 
+	 *
 	 * @param table nome della tabella.
 	 */
 
@@ -60,12 +61,11 @@ public class Data {
 			System.out.println(attributeSet);
 			System.out.println(" ================= ");
 
-		} catch (final SQLException | EmptySetException | DatabaseConnectionException | NoValueException e ) {
-		    System.out.println(e.getMessage());
+		} catch (final SQLException | EmptySetException | DatabaseConnectionException | NoValueException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
-
 
 	public int getNumberOfExamples() {
 		return numberOfExamples;
@@ -78,7 +78,7 @@ public class Data {
 	/**
 	 * Restituisce il valore dell' attributi alla riga exampleIndex e colonna
 	 * attributeIndex.
-	 * 
+	 *
 	 * @param exampleIndex   riga
 	 * @param attributeIndex colonna
 	 * @return valore
@@ -89,7 +89,7 @@ public class Data {
 
 	/**
 	 * Restituisce l' attributo in posizione index.
-	 * 
+	 *
 	 * @param index indice dell' attributo
 	 * @return l' attributo
 	 */
@@ -103,7 +103,7 @@ public class Data {
 
 	/**
 	 * Restituisce la tupla all' indice index.
-	 * 
+	 *
 	 * @param index indice di riga
 	 * @return tupla
 	 */
@@ -120,7 +120,6 @@ public class Data {
 		}
 		return tuple;
 	}
-
 
 	@Override
 	public String toString() {

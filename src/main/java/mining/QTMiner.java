@@ -34,9 +34,9 @@ public class QTMiner {
 	 * carica da file un ClusterSet salvato.
 	 * 
 	 * @param fileName percorso + nome file
-	 * @throws ClassNotFoundException
-	 * @throws IOException
-	 * @throws FileNotFoundException
+	 * @throws ClassNotFoundException se viene letto un oggetto di cui non conosco la classe.
+	 * @throws IOException problemi in lettura.
+	 * @throws FileNotFoundException se il file non esiste o non è leggibile.
 	 */
 	public QTMiner(final String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
 		final FileInputStream inFile = new FileInputStream(fileName);
@@ -56,13 +56,13 @@ public class QTMiner {
 	}
 
 	/**
-	 * richiama buildCandidateCluster finchÃ¨ tutte le tuple non sono state inserite
+	 * richiama buildCandidateCluster finchè tutte le tuple non sono state inserite
 	 * in un cluster. restituisce il numero di cluster creati.
 	 * 
 	 * @param data dataSet contenente i dati da clusterizzare.
 	 * @return numclusters numero di cluster generati.
-	 * @throws ClusteringRadiusException
-	 * @throws EmptyDatasetException
+	 * @throws ClusteringRadiusException se il numero di clusters è 1
+	 * @throws EmptyDatasetException se la tabella è vuota
 	 */
 	public int compute(final Data data) throws ClusteringRadiusException, EmptyDatasetException {
 
@@ -76,11 +76,9 @@ public class QTMiner {
 		}
 		int countClustered = 0;
 		while (countClustered != data.getNumberOfExamples()) {
-			// Ricerca cluster piï¿½ popoloso
 			final Cluster c = buildCandidateCluster(data, isClustered);
 			C.add(c);
 			numclusters++;
-			// Rimuovo tuple clusterizzate da dataset
 			for (final Integer i : c) {
 				isClustered[i] = true;
 			}
@@ -125,8 +123,8 @@ public class QTMiner {
 	 * serializza il ClusterSet su file.
 	 * 
 	 * @param fileName nome del file su cui salvare il ClusterSet.
-	 * @throws FileNotFoundException
-	 * @throws IOException
+	 * @throws FileNotFoundException se il file è una directory, se non è possibile crearlo o non si può aprire.
+	 * @throws IOException problemi in scrittura.
 	 */
 
 	public void salva(final String fileName) throws FileNotFoundException, IOException {

@@ -33,7 +33,7 @@ public class ServerOneClient extends Thread {
 	 * Inizializza la socket e gli stream.
 	 *
 	 * @param s socket
-	 * @throws IOException
+	 * @throws IOException problemi nella creazione degli stream.
 	 */
 	public ServerOneClient(final Socket s) throws IOException {
 		socket = s;
