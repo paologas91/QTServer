@@ -8,7 +8,7 @@ import java.net.Socket;
  * Gestisce le richieste dei client delegando la gestione della singola
  * richiesta a ServerOneClient.
  */
-public class MultiServer implements Runnable {
+public class MultiServer {
 
 	private int port;
 	private boolean running;
@@ -21,9 +21,9 @@ public class MultiServer implements Runnable {
 	public MultiServer(final int port) {
 		this.port = port;
 		running = true;
+		run();
 	}
 
-	@Override
 	public void run() {
 		ServerSocket server = null;
 		try {
@@ -39,9 +39,7 @@ public class MultiServer implements Runnable {
 			e.printStackTrace();
 		} finally {
 			try {
-				System.out.println("la vecchia porta");
 				server.close();
-				System.out.println("la sbarra");
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
@@ -56,7 +54,7 @@ public class MultiServer implements Runnable {
 	}
 
 	public static void main(final String[] args) {
-		new Thread(new MultiServer(Integer.parseInt(args[0]))).start();
+		new MultiServer(Integer.parseInt(args[0]));
 	}
 
 }
