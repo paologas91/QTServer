@@ -89,8 +89,10 @@ public class Tuple implements Serializable {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
-		if (getLength()!=((Tuple)o).getLength()) return false;
+	public boolean equals(final Object o) {
+		if (getLength()!=((Tuple)o).getLength()) {
+			return false;
+		}
 		return ((Tuple)o).getDistance(this)==0;
 	}
 }

@@ -1,6 +1,6 @@
 package database;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,14 @@ class DbAccessTest {
 
 	@Test
 	void testInitConnection() {
-		fail("Not yet implemented");
+		DbAccess dba = new DbAccess();
+		try {
+			dba.initConnection();
+		} catch (DatabaseConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(dba.getConnection());
 	}
 
 }

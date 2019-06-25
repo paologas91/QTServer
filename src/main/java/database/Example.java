@@ -43,6 +43,11 @@ public class Example implements Comparable<Example> {
 	}
 
 	@Override
+	public boolean equals(final Object o) {
+		return example.equals(((Example) o).example);
+	}
+
+	@Override
 	public String toString() {
 		String str = "";
 		for (final Object o : example) {
