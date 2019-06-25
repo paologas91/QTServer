@@ -17,7 +17,7 @@ class ClusterTest {
 			d = new Data("test");
 		} catch (EmptySetException e) {
 			e.printStackTrace();
-			fail("failed");
+			fail(e.getMessage());
 		}
 		Cluster c = new Cluster(d.getItemSet(0));
 		c.addData(0);

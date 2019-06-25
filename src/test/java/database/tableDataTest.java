@@ -45,13 +45,10 @@ class tableDataTest {
 		try {
 			assertEquals(trans, td.getDistinctTransazioni("test"));
 		} catch (SQLException e2) {
-
 			e2.printStackTrace();
-
 			fail(e2.getMessage());
 		} catch (EmptySetException e2) {
 			e2.printStackTrace();
-
 			fail(e2.getMessage());
 		}
 	}
@@ -66,7 +63,6 @@ class tableDataTest {
 			assertEquals(values, td.getDistinctColumnValues("test", ts.getColumn(0)));
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 			fail(e.getMessage());
 		}
 	}
@@ -77,7 +73,6 @@ class tableDataTest {
 			assertEquals((float) 30.3, td.getAggregateColumnValue("test", ts.getColumn(1), QUERY_TYPE.MIN));
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 			fail(e.getMessage());
 		} catch (NoValueException e) {
 			e.printStackTrace();

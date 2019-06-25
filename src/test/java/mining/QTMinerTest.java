@@ -47,22 +47,22 @@ class QTMinerTest {
 			d=new Data ("playtennis");
 		} catch (EmptySetException e) {
 			e.printStackTrace();
-			fail("failed");
+			fail(e.getMessage());
 		}
 		
 		q = new QTMiner(2);
 		try {
 			q.compute(d);
 		} catch (ClusteringRadiusException | EmptyDatasetException e) {
-			fail("exception thrown");
 			e.printStackTrace();
+			fail(e.getMessage());
 		}
 		
 		try {
 			q.salva("playtennis_2.0.dmp");
 		} catch (IOException e) {
-			fail("exception thrown");
 			e.printStackTrace();
+			fail(e.getMessage());
 		}
 		
 		QTMiner n = null;
@@ -70,8 +70,8 @@ class QTMinerTest {
 		try {
 			n = new QTMiner ("playtennis_2.0.dmp");
 		} catch (ClassNotFoundException | IOException e) {
-			fail("exception thrown");
 			e.printStackTrace();
+			fail(e.getMessage());
 		}
 		
 		assertEquals(q.getC(),n.getC());

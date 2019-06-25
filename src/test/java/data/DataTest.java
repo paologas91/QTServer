@@ -28,7 +28,7 @@ class DataTest {
 				d=new Data ("test");
 			} catch (EmptySetException e) {
 				e.printStackTrace();
-				fail("failed");
+				fail(e.getMessage());
 			}
 
 	}

@@ -24,7 +24,6 @@ class TableSchemaTest {
 			e.printStackTrace();
 			fail(e.getMessage());
 		} catch (DatabaseConnectionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

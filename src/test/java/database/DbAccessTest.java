@@ -12,7 +12,6 @@ class DbAccessTest {
 		try {
 			dba.initConnection();
 		} catch (DatabaseConnectionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertNotNull(dba.getConnection());
