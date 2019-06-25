@@ -70,7 +70,6 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
 	
 	@Override 
 	public boolean equals(Object o) {
-		//System.out.println("cluster " + (centroid.equals(((Cluster)o).centroid) && clusteredData.equals(((Cluster)o).clusteredData)));
 		return centroid.equals(((Cluster)o).centroid) && clusteredData.equals(((Cluster)o).clusteredData);
 	}
 

@@ -74,13 +74,6 @@ class QTMinerTest {
 			e.printStackTrace();
 		}
 		
-//		try {
-//			n.compute(d);
-//		} catch (ClusteringRadiusException | EmptyDatasetException e) {
-//			fail("exception thrown");
-//			e.printStackTrace();
-//		}
-		
 		assertEquals(q.getC(),n.getC());
 		
 	}
