@@ -10,7 +10,7 @@ import java.net.Socket;
  */
 public class MultiServer implements Runnable {
 
-	private int port = 8080;
+	private int port;
 	private boolean running;
 
 	/**
@@ -56,7 +56,7 @@ public class MultiServer implements Runnable {
 	}
 
 	public static void main(final String[] args) {
-		new Thread(new MultiServer(8080)).start();
+		new Thread(new MultiServer(Integer.parseInt(args[0]))).start();
 	}
 
 }
