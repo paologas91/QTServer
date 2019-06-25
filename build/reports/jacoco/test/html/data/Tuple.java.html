@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tuple.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QTServer</a> &gt; <a href="index.source.html" class="el_package">data</a> &gt; <span class="el_source">Tuple.java</span></div><h1>Tuple.java</h1><pre class="source lang-java linenums">package data;
+
+import java.io.Serializable;
+import java.util.Set;
+
+/**
+ * modella una tupla della tabella fornendo metodi per il confronto con altre
+ * tuple.
+ */
+
+public class Tuple implements Serializable {
+
+	private Item[] tuple; // array di Item
+
+	/**
+	 * Costruisce una tupla vuota di dimensione size.
+	 * 
+	 * @param size dimensione della tupla
+	 */
+<span class="fc" id="L20">	Tuple(final int size) {</span>
+<span class="fc" id="L21">		tuple = new Item[size];</span>
+<span class="fc" id="L22">	}</span>
+
+	public int getLength() {
+<span class="fc" id="L25">		return tuple.length;</span>
+	}
+
+	/**
+	 * Restituisce l' item in posizione i.
+	 * 
+	 * @param i posizione dell item
+	 * @return l'item
+	 */
+	public Item get(final int i) {
+<span class="fc" id="L35">		return tuple[i];</span>
+	}
+
+	/**
+	 * Inserisce l'item c in posizione i.
+	 * 
+	 * @param c item da inserire
+	 * @param i posizione
+	 */
+	void add(final Item c, final int i) {
+<span class="fc" id="L45">		tuple[i] = c;</span>
+<span class="fc" id="L46">	}</span>
+
+	/**
+	 * Restituisce la distanza tra la tupla corrente e obj. La distanza è ottenuta
+	 * come la somma delle distanze tra gli item in posizioni eguali nelle due
+	 * tuple.
+	 * 
+	 * @param obj tupla da cui calcolare la distanza
+	 * @return la distanza
+	 */
+	public double getDistance(final Tuple obj) {
+<span class="fc" id="L57">		double distance = 0.0;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		for (int i = 0; i &lt; obj.getLength(); i++) {</span>
+<span class="fc" id="L59">			distance += get(i).distance(obj.get(i));</span>
+		}
+<span class="fc" id="L61">		return distance;</span>
+	}
+
+	/**
+	 * Calcola la distanza media tra la tupla corrente e le tuple clusterizzate.
+	 * 
+	 * @param data          Tabella contenente tutte le tuple
+	 * @param clusteredData insieme degli indici delle tuple clusterizzate
+	 * @return la distanza media
+	 */
+	public double avgDistance(final Data data, final Set&lt;Integer&gt; clusteredData) {
+<span class="fc" id="L72">		double p = 0.0, sumD = 0.0;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (final Integer i : clusteredData) {</span>
+<span class="fc" id="L74">			final double d = getDistance(data.getItemSet(i));</span>
+<span class="fc" id="L75">			sumD += d;</span>
+<span class="fc" id="L76">		}</span>
+<span class="fc" id="L77">		p = sumD / clusteredData.size();</span>
+<span class="fc" id="L78">		return p;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L83">		String str = &quot;&quot;;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (int i = 0; i &lt; tuple.length - 1; i++) {</span>
+<span class="nc" id="L85">			str += tuple[i].getValue() + &quot;, &quot;;</span>
+		}
+<span class="nc" id="L87">		str += tuple[tuple.length - 1].getValue();</span>
+<span class="nc" id="L88">		return str;</span>
+	}
+	
+	@Override
+	public boolean equals(final Object o) {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (getLength()!=((Tuple)o).getLength()) {</span>
+<span class="nc" id="L94">			return false;</span>
+		}
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		return ((Tuple)o).getDistance(this)==0;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

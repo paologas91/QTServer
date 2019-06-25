@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DbAccess.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QTServer</a> &gt; <a href="index.source.html" class="el_package">database</a> &gt; <span class="el_source">DbAccess.java</span></div><h1>DbAccess.java</h1><pre class="source lang-java linenums">package database;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+/**
+ * gestisce la connessione al database.
+ */
+
+<span class="fc" id="L11">public class DbAccess {</span>
+
+	/**
+	 * (Per utilizzare questo Driver scaricare e aggiungere al classpath il
+	 * connettore mysql connector).
+	 */
+	private static final String DRIVER_CLASS_NAME = &quot;com.mysql.cj.jdbc.Driver&quot;; // org.gjt.mm.mysql.Driver&quot;;
+	/**
+	 *
+	 */
+	private static final String DBMS = &quot;jdbc:mysql&quot;;
+	/**
+	 * contiene l'identificativo del server su cui risiede la base di dati (per
+	 * esempio localhost).
+	 */
+	private static final String SERVER = &quot;localhost&quot;;
+	/**
+	 * contiene il nome della base di dati.
+	 */
+	private static final String DATABASE = &quot;MapDB&quot;;
+	/**
+	 * La porta su cui il DBMS MySQL accetta le connessioni.
+	 */
+	private static final String PORT = &quot;3306&quot;;
+	/**
+	 * contiene il nome dell' utente per l'accesso alla base di dati.
+	 */
+	private static final String USER_ID = &quot;MapUser&quot;;
+	/**
+	 * contiene la password di autenticazione per l' utente identificato da USER_ID.
+	 */
+	private static final String PASSWORD = &quot;map&quot;;
+	/**
+	 * gestisce una connessione.
+	 */
+	private Connection conn;
+
+	/**
+	 * Impartisce al class loader l' ordine di caricare il driver mysql, inizializza
+	 * la connessione riferita da conn. Il metodo solleva e propaga una eccezione di
+	 * tipo DatabaseConnectionException in caso di fallimento nella connessione al
+	 * database.
+	 *
+	 * @throws DatabaseConnectionException problemi di connessione al database
+	 */
+	public void initConnection() throws DatabaseConnectionException {
+		try {
+<span class="fc" id="L58">			Class.forName(DRIVER_CLASS_NAME).newInstance();</span>
+<span class="nc" id="L59">		} catch (final ClassNotFoundException e) {</span>
+<span class="nc" id="L60">			e.printStackTrace();</span>
+<span class="nc" id="L61">		} catch (final IllegalAccessException e) {</span>
+<span class="nc" id="L62">			e.printStackTrace();</span>
+<span class="nc" id="L63">		} catch (final InstantiationException e) {</span>
+<span class="nc" id="L64">			e.printStackTrace();</span>
+<span class="pc" id="L65">		}</span>
+		try {
+<span class="fc" id="L67">			conn = DriverManager.getConnection(DBMS + &quot;://&quot; + SERVER + &quot;:&quot; + PORT + &quot;/&quot; + DATABASE</span>
+					+ &quot;?user=&quot; + USER_ID + &quot;&amp;password=&quot; + PASSWORD + &quot;&amp;serverTimezone=UTC&quot;);
+<span class="nc" id="L69">		} catch (final SQLException e) {</span>
+<span class="nc" id="L70">			throw new DatabaseConnectionException(&quot;connessione fallita&quot;);</span>
+<span class="fc" id="L71">		}</span>
+<span class="fc" id="L72">	}</span>
+
+	/**
+	 * Restituisce la connessione.
+	 *
+	 * @return conn
+	 */
+	public Connection getConnection() {
+<span class="fc" id="L80">		return conn;</span>
+	}
+
+	/**
+	 * chiude la connessione conn.
+	 */
+	public void closeConnection() {
+		try {
+<span class="nc" id="L88">			conn.close();</span>
+<span class="nc" id="L89">		} catch (final SQLException e) {</span>
+<span class="nc" id="L90">			e.printStackTrace();</span>
+<span class="nc" id="L91">		}</span>
+<span class="nc" id="L92">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

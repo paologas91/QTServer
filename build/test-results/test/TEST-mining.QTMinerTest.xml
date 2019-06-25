@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="mining.QTMinerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-06-25T13:43:17" hostname="DESKTOP-07AMN4D" time="0.212">
+  <properties/>
+  <testcase name="testSalva()" classname="mining.QTMinerTest" time="0.15"/>
+  <testcase name="testCompute()" classname="mining.QTMinerTest" time="0.061"/>
+  <system-out><![CDATA[ ================= 
+[outlook, temperature, umidity, wind, play]
+ ================= 
+ ================= 
+[discreto, continuo]
+ ================= 
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

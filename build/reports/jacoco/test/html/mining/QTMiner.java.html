@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QTMiner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QTServer</a> &gt; <a href="index.source.html" class="el_package">mining</a> &gt; <span class="el_source">QTMiner.java</span></div><h1>QTMiner.java</h1><pre class="source lang-java linenums">package mining;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Set;
+import java.util.TreeSet;
+
+import data.Data;
+import data.EmptyDatasetException;
+
+/**
+ * classe che implementa l'algoritmo di Quality Threshold.
+ */
+public class QTMiner {
+
+	private ClusterSet C;
+	private double radius;
+
+	/**
+	 * Crea un nuovo ClusterSet e assegna il raggio.
+	 * 
+	 * @param radius raggio dei cluster
+	 */
+<span class="fc" id="L28">	public QTMiner(final double radius) {</span>
+<span class="fc" id="L29">		C = new ClusterSet();</span>
+<span class="fc" id="L30">		this.radius = radius;</span>
+<span class="fc" id="L31">	}</span>
+
+	/**
+	 * carica da file un ClusterSet salvato.
+	 * 
+	 * @param fileName percorso + nome file
+	 * @throws ClassNotFoundException se viene letto un oggetto di cui non conosco la classe.
+	 * @throws IOException problemi in lettura.
+	 * @throws FileNotFoundException se il file non esiste o non è leggibile.
+	 */
+<span class="fc" id="L41">	public QTMiner(final String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {</span>
+<span class="fc" id="L42">		final FileInputStream inFile = new FileInputStream(fileName);</span>
+<span class="fc" id="L43">		final ObjectInputStream inStream = new ObjectInputStream(inFile);</span>
+<span class="fc" id="L44">		C = (ClusterSet) inStream.readObject();</span>
+<span class="fc" id="L45">		inStream.close();</span>
+<span class="fc" id="L46">		inFile.close();</span>
+<span class="fc" id="L47">	}</span>
+
+	/**
+	 * restituisce il ClusterSet creato.
+	 * 
+	 * @return C ClusterSet.
+	 */
+	public ClusterSet getC() {
+<span class="fc" id="L55">		return C;</span>
+	}
+
+	/**
+	 * richiama buildCandidateCluster finchè tutte le tuple non sono state inserite
+	 * in un cluster. restituisce il numero di cluster creati.
+	 * 
+	 * @param data dataSet contenente i dati da clusterizzare.
+	 * @return numclusters numero di cluster generati.
+	 * @throws ClusteringRadiusException se il numero di clusters è 1
+	 * @throws EmptyDatasetException se la tabella è vuota
+	 */
+	public int compute(final Data data) throws ClusteringRadiusException, EmptyDatasetException {
+
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (data.getNumberOfExamples() == 0) {</span>
+<span class="nc" id="L70">			throw new EmptyDatasetException(&quot;Empty dataset!&quot;);</span>
+		}
+<span class="fc" id="L72">		int numclusters = 0;</span>
+<span class="fc" id="L73">		final boolean[] isClustered = new boolean[data.getNumberOfExamples()];</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (int i = 0; i &lt; isClustered.length; i++) {</span>
+<span class="fc" id="L75">			isClustered[i] = false;</span>
+		}
+<span class="fc" id="L77">		int countClustered = 0;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		while (countClustered != data.getNumberOfExamples()) {</span>
+<span class="fc" id="L79">			final Cluster c = buildCandidateCluster(data, isClustered);</span>
+<span class="fc" id="L80">			C.add(c);</span>
+<span class="fc" id="L81">			numclusters++;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			for (final Integer i : c) {</span>
+<span class="fc" id="L83">				isClustered[i] = true;</span>
+<span class="fc" id="L84">			}</span>
+<span class="fc" id="L85">			countClustered += c.getSize();</span>
+<span class="fc" id="L86">		}</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (numclusters == 1) {</span>
+<span class="fc" id="L89">			throw new ClusteringRadiusException(data.getNumberOfExamples() + &quot;tuples in one cluster!&quot;);</span>
+		}
+<span class="fc" id="L91">		return numclusters;</span>
+	}
+
+	/**
+	 * Costruisce un cluster per ciascuna tupla di data non ancora clusterizzata in
+	 * un cluster di C e restituisce il cluster candidato più popoloso.
+	 * 
+	 * @param data        dataSet contenente i dati da clusterizzare.
+	 * @param isClustered array di booleani che indica quali tuple sono state già
+	 *                    clusterizzate
+	 * @return il cluster candidato
+	 */
+	private Cluster buildCandidateCluster(final Data data, final boolean[] isClustered) {
+
+<span class="fc" id="L105">		final Set&lt;Cluster&gt; C = new TreeSet&lt;Cluster&gt;();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (int i = 0; i &lt; data.getNumberOfExamples(); i++) {</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			if (!isClustered[i]) {</span>
+<span class="fc" id="L108">				final Cluster candidato = new Cluster(data.getItemSet(i));</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">				for (int j = 0; j &lt; data.getNumberOfExamples(); j++) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">					if (!isClustered[j]) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">						if (data.getItemSet(i).getDistance(data.getItemSet(j)) &lt;= radius) {</span>
+<span class="fc" id="L112">							candidato.addData(j);</span>
+						}
+					}
+				}
+<span class="fc" id="L116">				C.add(candidato);</span>
+			}
+		}
+<span class="fc" id="L119">		return ((TreeSet&lt;Cluster&gt;) C).last();</span>
+	}
+
+	/**
+	 * serializza il ClusterSet su file.
+	 * 
+	 * @param fileName nome del file su cui salvare il ClusterSet.
+	 * @throws FileNotFoundException se il file è una directory, se non è possibile crearlo o non si può aprire.
+	 * @throws IOException problemi in scrittura.
+	 */
+
+	public void salva(final String fileName) throws FileNotFoundException, IOException {
+<span class="fc" id="L131">		final FileOutputStream outFile = new FileOutputStream(fileName);</span>
+<span class="fc" id="L132">		final ObjectOutputStream outStream = new ObjectOutputStream(outFile);</span>
+<span class="fc" id="L133">		outStream.writeObject(C);</span>
+<span class="fc" id="L134">		outFile.close();</span>
+<span class="fc" id="L135">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L139">		return C.toString();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContinuousItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QTServer</a> &gt; <a href="index.source.html" class="el_package">data</a> &gt; <span class="el_source">ContinuousItem.java</span></div><h1>ContinuousItem.java</h1><pre class="source lang-java linenums">package data;
+
+/**
+ * modella una cella della tabella contenente un valore continuo.
+ */
+
+class ContinuousItem extends Item {
+
+	/**
+	 * Inizializza i valori dei membri attribute e value.
+	 * 
+	 * @param attribute Attributo componente dell' item
+	 * @param value     Valore dell' item
+	 */
+	ContinuousItem(final ContinuousAttribute attribute, final double value) {
+<span class="fc" id="L16">		super(attribute, value);</span>
+<span class="fc" id="L17">	}</span>
+
+	/**
+	 * Calcola la distanza tra due ContinuousItem.
+	 * 
+	 * @param a ContinuousItem da cui calcola la distanza
+	 * @return la distanza
+	 */
+	@Override
+	double distance(final Object a) {
+<span class="fc" id="L27">		return Math.abs(((ContinuousAttribute) getAttribute()).getScaledValue((double) getValue())</span>
+<span class="fc" id="L28">				- ((ContinuousAttribute) ((Item) a).getAttribute())</span>
+<span class="fc" id="L29">						.getScaledValue((double) ((Item) a).getValue()));</span>
+
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+<span class="pc bpc" id="L35" title="2 of 4 branches missed.">		return ((ContinuousItem)o).getAttribute().equals(getAttribute()) &amp;&amp; ((ContinuousItem)o).getValue().equals(getValue());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

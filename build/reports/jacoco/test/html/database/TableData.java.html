@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TableData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QTServer</a> &gt; <a href="index.source.html" class="el_package">database</a> &gt; <span class="el_source">TableData.java</span></div><h1>TableData.java</h1><pre class="source lang-java linenums">package database;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import database.TableSchema.Column;
+
+/**
+ * Recupera i dati dal database.
+ *
+ */
+public class TableData {
+
+	private DbAccess db;
+
+	/**
+	 * Inizializza db.
+	 *
+	 * @param db gestore accesso al DB
+	 */
+<span class="fc" id="L26">	public TableData(final DbAccess db) {</span>
+<span class="fc" id="L27">		this.db = db;</span>
+<span class="fc" id="L28">	}</span>
+
+	/**
+	 * popola una List di Example con le tuple della tabella del database.
+	 *
+	 * @param table nome della tabella nel database.
+	 * @return Lista di transazioni distinte memorizzate nella tabella.
+	 * @throws SQLException      se il numero di colonne della tabella è 0.
+	 * @throws EmptySetException se la tabella è vuota.
+	 */
+	public List&lt;Example&gt; getDistinctTransazioni(final String table) throws SQLException, EmptySetException {
+<span class="fc" id="L39">		final LinkedList&lt;Example&gt; transSet = new LinkedList&lt;Example&gt;();</span>
+		Statement statement;
+<span class="fc" id="L41">		final TableSchema tSchema = new TableSchema(db, table);</span>
+<span class="fc" id="L42">		String query = &quot;select distinct &quot;;</span>
+
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		for (int i = 0; i &lt; tSchema.getNumberOfAttributes(); i++) {</span>
+<span class="fc" id="L45">			final Column c = tSchema.getColumn(i);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">			if (i &gt; 0) {</span>
+<span class="fc" id="L47">				query += &quot;,&quot;;</span>
+			}
+<span class="fc" id="L49">			query += c.getColumnName();</span>
+		}
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (tSchema.getNumberOfAttributes() == 0) {</span>
+<span class="nc" id="L52">			throw new SQLException();</span>
+		}
+<span class="fc" id="L54">		query += &quot; FROM &quot; + table;</span>
+
+<span class="fc" id="L56">		statement = db.getConnection().createStatement();</span>
+<span class="fc" id="L57">		final ResultSet rs = statement.executeQuery(query);</span>
+<span class="fc" id="L58">		boolean empty = true;</span>
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		while (rs.next()) {</span>
+<span class="fc" id="L61">			empty = false;</span>
+<span class="fc" id="L62">			final Example currentTuple = new Example();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">			for (int i = 0; i &lt; tSchema.getNumberOfAttributes(); i++) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">				if (tSchema.getColumn(i).isNumber()) {</span>
+<span class="fc" id="L65">					currentTuple.add(rs.getDouble(i + 1));</span>
+				} else {
+<span class="fc" id="L67">					currentTuple.add(rs.getString(i + 1));</span>
+				}
+			}
+<span class="fc" id="L70">			transSet.add(currentTuple);</span>
+<span class="fc" id="L71">		}</span>
+<span class="fc" id="L72">		rs.close();</span>
+<span class="fc" id="L73">		statement.close();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (empty) {</span>
+<span class="fc" id="L75">			throw new EmptySetException(&quot;il set è vuoto&quot;);</span>
+		}
+<span class="fc" id="L77">		return transSet;</span>
+	}
+
+	/**
+	 * effettua una query su una colonna restituendone tutti i valori assunti
+	 * ordinati e distinti.
+	 *
+	 * @param table  nome della tabella.
+	 * @param column nome della colonna.
+	 * @return insieme ordinato dei valori presenti in una singola colonna della
+	 *         tabella.
+	 * @throws SQLException problemi con il database.
+	 */
+	public Set&lt;Object&gt; getDistinctColumnValues(final String table, final Column column) throws SQLException {
+<span class="fc" id="L91">		final Set&lt;Object&gt; valueSet = new TreeSet&lt;Object&gt;();</span>
+		Statement statement;
+<span class="fc" id="L93">		String query = &quot;select distinct &quot;;</span>
+<span class="fc" id="L94">		query += column.getColumnName();</span>
+<span class="fc" id="L95">		query += &quot; FROM &quot; + table;</span>
+<span class="fc" id="L96">		query += &quot; ORDER BY &quot; + column.getColumnName();</span>
+<span class="fc" id="L97">		statement = db.getConnection().createStatement();</span>
+<span class="fc" id="L98">		final ResultSet rs = statement.executeQuery(query);</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		while (rs.next()) {</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (column.isNumber()) {</span>
+<span class="nc" id="L102">				valueSet.add(rs.getDouble(1));</span>
+			} else {
+<span class="fc" id="L104">				valueSet.add(rs.getString(1));</span>
+			}
+		}
+<span class="fc" id="L107">		rs.close();</span>
+<span class="fc" id="L108">		statement.close();</span>
+<span class="fc" id="L109">		return valueSet;</span>
+	}
+
+	/**
+	 * effettua una query con operazione di aggregazione.
+	 *
+	 * @param table     tabella in cui cercare.
+	 * @param column    colonna su cui cercare il valore aggregato.
+	 * @param aggregate può essere MAX o MIN.
+	 * @return il massimo o il minimo in una colonna (se presente).
+	 * @throws SQLException     problemi col database.
+	 * @throws NoValueException se il valore è nullo.
+	 */
+	public Object getAggregateColumnValue(final String table, final Column column, final QUERY_TYPE aggregate)
+			throws SQLException, NoValueException {
+		Statement statement;
+<span class="fc" id="L125">		Object value = null;</span>
+<span class="fc" id="L126">		String aggregateOp = &quot;&quot;;</span>
+<span class="fc" id="L127">		String query = &quot;select &quot;;</span>
+
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (aggregate == QUERY_TYPE.MAX) {</span>
+<span class="fc" id="L130">			aggregateOp += &quot;max&quot;;</span>
+		} else {
+<span class="fc" id="L132">			aggregateOp += &quot;min&quot;;</span>
+		}
+
+<span class="fc" id="L135">		query += aggregateOp + &quot;(&quot; + column.getColumnName() + &quot;) FROM &quot; + table;</span>
+<span class="fc" id="L136">		statement = db.getConnection().createStatement();</span>
+<span class="fc" id="L137">		final ResultSet rs = statement.executeQuery(query);</span>
+
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (rs.next()) {</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			if (column.isNumber()) {</span>
+<span class="fc" id="L141">				value = rs.getFloat(1);</span>
+			} else {
+<span class="nc" id="L143">				value = rs.getString(1);</span>
+			}
+		}
+<span class="fc" id="L146">		rs.close();</span>
+<span class="fc" id="L147">		statement.close();</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L149">			throw new NoValueException(&quot;No &quot; + aggregateOp + &quot; on &quot; + column.getColumnName());</span>
+		}
+<span class="fc" id="L151">		return value;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

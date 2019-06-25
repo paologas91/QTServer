@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="data.DataTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-06-25T13:43:17" hostname="DESKTOP-07AMN4D" time="0.018">
+  <properties/>
+  <testcase name="testGetItemSet()" classname="data.DataTest" time="0.009"/>
+  <testcase name="testGetAttributeValue()" classname="data.DataTest" time="0.001"/>
+  <testcase name="testGetNumberOfExamples()" classname="data.DataTest" time="0.001"/>
+  <testcase name="testGetAttribute()" classname="data.DataTest" time="0.001"/>
+  <testcase name="testGetAttributeSchema()" classname="data.DataTest" time="0.001"/>
+  <testcase name="testGetNumberOfAttributes()" classname="data.DataTest" time="0.001"/>
+  <system-out><![CDATA[ ================= 
+[discreto, continuo]
+ ================= 
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

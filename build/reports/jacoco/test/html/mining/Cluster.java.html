@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cluster.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QTServer</a> &gt; <a href="index.source.html" class="el_package">mining</a> &gt; <span class="el_source">Cluster.java</span></div><h1>Cluster.java</h1><pre class="source lang-java linenums">package mining;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import data.Data;
+import data.Tuple;
+
+/**
+ * memorizza il centroide e gli indici delle tuple che fanno parte del cluster.
+ */
+
+class Cluster implements Iterable&lt;Integer&gt;, Comparable&lt;Cluster&gt;, Serializable {
+
+	private Tuple centroid;
+<span class="fc" id="L18">	private Set&lt;Integer&gt; clusteredData = new HashSet&lt;Integer&gt;();</span>
+
+	/**
+	 * Assegna il centroide al cluster.
+	 * 
+	 * @param centroid tupla centrale del cluster
+	 */
+<span class="fc" id="L25">	Cluster(final Tuple centroid) {</span>
+<span class="fc" id="L26">		this.centroid = centroid;</span>
+<span class="fc" id="L27">	}</span>
+
+	Tuple getCentroid() {
+<span class="nc" id="L30">		return centroid;</span>
+	}
+
+	/**
+	 * aggiunge una tupla.
+	 * 
+	 * @param id da inserire in clusteredData.
+	 * @return true se la tupla Ã¨ stata inserita.
+	 */
+	boolean addData(final int id) {
+<span class="fc" id="L40">		return clusteredData.add(id);</span>
+	}
+
+	/**
+	 * verifica se una transazione Ã¨ clusterizzata nell'array corrente.
+	 * 
+	 * @param id della tupla di cui si vuole effettuare la verifica.
+	 * @return true se Ã¨ contenuta.
+	 */
+	boolean contain(final int id) {
+<span class="nc" id="L50">		return clusteredData.contains(id); // oppure (Integer(id)) ????</span>
+	}
+
+	/**
+	 * rimuove la tupla che ha cambiato il cluster.
+	 * 
+	 * @param id della tupla da rimuovere.
+	 */
+	void removeTuple(final int id) {
+<span class="nc" id="L59">		clusteredData.remove(id);</span>
+<span class="nc" id="L60">	}</span>
+
+	int getSize() {
+<span class="fc" id="L63">		return clusteredData.size();</span>
+	}
+
+	@Override
+	public Iterator&lt;Integer&gt; iterator() {
+<span class="fc" id="L68">		return clusteredData.iterator();</span>
+	}
+	
+	@Override 
+	public boolean equals(Object o) {
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">		return centroid.equals(((Cluster)o).centroid) &amp;&amp; clusteredData.equals(((Cluster)o).clusteredData);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L78">		String str = &quot;Centroid=(&quot;;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (int i = 0; i &lt; centroid.getLength(); i++) {</span>
+<span class="nc" id="L80">			str += centroid.get(i) + &quot; &quot;;</span>
+		}
+<span class="nc" id="L82">		str += &quot;)&quot;;</span>
+<span class="nc" id="L83">		return str;</span>
+	}
+
+	@Override
+	public int compareTo(final Cluster c) {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (getSize() &gt; c.getSize()) {</span>
+<span class="fc" id="L89">			return 1;</span>
+		} else {
+<span class="fc" id="L91">			return -1;</span>
+		}
+	}
+
+	public String toString(final Data data) {
+<span class="nc" id="L96">		String str = &quot;Centroid=(&quot;;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (int i = 0; i &lt; centroid.getLength(); i++) {</span>
+<span class="nc" id="L98">			str += centroid.get(i) + &quot; &quot;;</span>
+		}
+<span class="nc" id="L100">		str += &quot;)\nExamples:\n&quot;;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (final Integer i : clusteredData) {</span>
+<span class="nc" id="L102">			str += &quot;[&quot;;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			for (int j = 0; j &lt; data.getNumberOfAttributes(); j++) {</span>
+<span class="nc" id="L104">				str += data.getAttributeValue(i, j) + &quot; &quot;;</span>
+			}
+<span class="nc" id="L106">			str += &quot;] dist=&quot; + getCentroid().getDistance(data.getItemSet(i)) + &quot;\n&quot;;</span>
+<span class="nc" id="L107">		}</span>
+<span class="nc" id="L108">		str += &quot;\nAvgDistance=&quot; + getCentroid().avgDistance(data, clusteredData);</span>
+<span class="nc" id="L109">		return str;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

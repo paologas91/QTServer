@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="data.ContinuousAttributeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-06-25T13:43:14" hostname="DESKTOP-07AMN4D" time="0.044">
+  <properties/>
+  <testcase name="testGetScaledValue()" classname="data.ContinuousAttributeTest" time="0.044"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

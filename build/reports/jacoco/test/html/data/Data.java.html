@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Data.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">QTServer</a> &gt; <a href="index.source.html" class="el_package">data</a> &gt; <span class="el_source">Data.java</span></div><h1>Data.java</h1><pre class="source lang-java linenums">package data;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import database.DatabaseConnectionException;
+import database.DbAccess;
+import database.EmptySetException;
+import database.Example;
+import database.NoValueException;
+import database.QUERY_TYPE;
+import database.TableData;
+import database.TableSchema;
+
+/**
+ * modella una tebella del database.
+ */
+public class Data {
+
+<span class="fc" id="L22">	private List&lt;Example&gt; data = new ArrayList&lt;Example&gt;();</span>
+	private int numberOfExamples;
+<span class="fc" id="L24">	private List&lt;Attribute&gt; attributeSet = new LinkedList&lt;Attribute&gt;();</span>
+
+	/**
+	 * popola l'attributeSet, data e inizializza numberOfExamples utilizzando
+	 * tabella del database.
+	 *
+	 * @param table nome della tabella.
+	 */
+
+<span class="fc" id="L33">	public Data(final String table) throws EmptySetException {</span>
+
+<span class="fc" id="L35">		final DbAccess db = new DbAccess();</span>
+<span class="fc" id="L36">		final TableData tData = new TableData(db);</span>
+
+		try {
+
+<span class="fc" id="L40">			db.initConnection();</span>
+<span class="fc" id="L41">			data = tData.getDistinctTransazioni(table);</span>
+<span class="fc" id="L42">			final TableSchema tSchema = new TableSchema(db, table);</span>
+<span class="fc" id="L43">			numberOfExamples = data.size();</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">			for (int i = 0; i &lt; tSchema.getNumberOfAttributes(); i++) {</span>
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">				if (tSchema.getColumn(i).isNumber()) {</span>
+<span class="fc" id="L48">					attributeSet.add(new ContinuousAttribute(tSchema.getColumn(i).getColumnName(),</span>
+							i,
+<span class="fc" id="L50">							(float) tData.getAggregateColumnValue(table,</span>
+<span class="fc" id="L51">									tSchema.getColumn(i), QUERY_TYPE.MIN),</span>
+<span class="fc" id="L52">							(float) tData.getAggregateColumnValue(table,</span>
+<span class="fc" id="L53">									tSchema.getColumn(i), QUERY_TYPE.MAX)));</span>
+				} else {
+<span class="fc" id="L55">					attributeSet.add(new DiscreteAttribute(tSchema.getColumn(i).getColumnName(), i,</span>
+<span class="fc" id="L56">							tData.getDistinctColumnValues(table, tSchema.getColumn(i))</span>
+<span class="fc" id="L57">									.toArray(new String[0])));</span>
+				}
+			}
+<span class="fc" id="L60">			System.out.println(&quot; ================= &quot;);</span>
+<span class="fc" id="L61">			System.out.println(attributeSet);</span>
+<span class="fc" id="L62">			System.out.println(&quot; ================= &quot;);</span>
+
+<span class="nc" id="L64">		} catch (final SQLException | DatabaseConnectionException | NoValueException e) {</span>
+<span class="nc" id="L65">			System.out.println(e.getMessage());</span>
+<span class="nc" id="L66">			e.printStackTrace();</span>
+<span class="fc" id="L67">		}</span>
+<span class="fc" id="L68">	}</span>
+
+	public int getNumberOfExamples() {
+<span class="fc" id="L71">		return numberOfExamples;</span>
+	}
+
+	public int getNumberOfAttributes() {
+<span class="fc" id="L75">		return attributeSet.size();</span>
+	}
+
+	/**
+	 * Restituisce il valore dell' attributi alla riga exampleIndex e colonna
+	 * attributeIndex.
+	 *
+	 * @param exampleIndex   riga
+	 * @param attributeIndex colonna
+	 * @return valore
+	 */
+	public Object getAttributeValue(final int exampleIndex, final int attributeIndex) {
+<span class="fc" id="L87">		return data.get(exampleIndex).get(attributeIndex);</span>
+	}
+
+	/**
+	 * Restituisce l' attributo in posizione index.
+	 *
+	 * @param index indice dell' attributo
+	 * @return l' attributo
+	 */
+	public Attribute getAttribute(final int index) {
+<span class="fc" id="L97">		return attributeSet.get(index);</span>
+	}
+
+	public List&lt;Attribute&gt; getAttributeSchema() {
+<span class="fc" id="L101">		return attributeSet;</span>
+	}
+
+	/**
+	 * Restituisce la tupla all' indice index.
+	 *
+	 * @param index indice di riga
+	 * @return tupla
+	 */
+	public Tuple getItemSet(final int index) {
+<span class="fc" id="L111">		final Tuple tuple = new Tuple(attributeSet.size());</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (int i = 0; i &lt; attributeSet.size(); i++) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (attributeSet.get(i) instanceof DiscreteAttribute) {</span>
+<span class="fc" id="L114">				tuple.add(new DiscreteItem((DiscreteAttribute) attributeSet.get(i),</span>
+<span class="fc" id="L115">						(String) data.get(index).get(i)), i);</span>
+			} else {
+<span class="fc" id="L117">				tuple.add(new ContinuousItem((ContinuousAttribute) attributeSet.get(i),</span>
+<span class="fc" id="L118">						(double) data.get(index).get(i)), i);</span>
+			}
+		}
+<span class="fc" id="L121">		return tuple;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L126">		String s = &quot;&quot;;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		for (int i = 0; i &lt; getNumberOfAttributes(); i++) {</span>
+			// se non avessi ridefinito il toString in Attribute, avrei la stampa di default
+			// di Object
+<span class="nc" id="L130">			s += attributeSet.get(i);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			if (i != getNumberOfAttributes() - 1) {</span>
+<span class="nc" id="L132">				s += &quot;, &quot;;</span>
+			}
+		}
+<span class="nc" id="L135">		s += '\n';</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (int i = 0; i &lt; getNumberOfExamples(); i++) {</span>
+<span class="nc" id="L137">			s += i + 1 + &quot;:&quot;;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			for (int j = 0; j &lt; getNumberOfAttributes(); j++) {</span>
+<span class="nc" id="L139">				s += getAttributeValue(i, j);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">				if (j != getNumberOfAttributes() - 1) {</span>
+<span class="nc" id="L141">					s += &quot;, &quot;;</span>
+				}
+			}
+<span class="nc" id="L144">			s += &quot;\n&quot;;</span>
+		}
+<span class="nc" id="L146">		return s;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
