@@ -29,4 +29,9 @@ class ContinuousItem extends Item {
 						.getScaledValue((double) ((Item) a).getValue()));
 
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return ((ContinuousItem)o).getAttribute().equals(getAttribute()) && ((ContinuousItem)o).getValue().equals(getValue());
+	}
 }

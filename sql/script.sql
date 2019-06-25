@@ -57,3 +57,11 @@ insert into MapDB.gopicnic values
   ('sunny',40,'low','weak','no'),
   ('overcast',23,'low','weak','yes'),
   ('rain',40,'high','strong','no');
+
+CREATE TABLE MapDB.test(
+  discreto varchar(10),
+  continuo float(5,2));
+
+insert into MapDB.test values
+  ('primo',30.3),
+  ('secondo',31.2);

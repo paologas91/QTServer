@@ -10,6 +10,8 @@ class ContinuousAttribute extends Attribute {
 	private double max;
 	private double min;
 
+	private static final double accuracy = 0.01;
+	
 	/**
 	 * Inizializza i valori dei membri name, index,min,max.
 	 * 
@@ -32,5 +34,11 @@ class ContinuousAttribute extends Attribute {
 	 */
 	double getScaledValue(final double v) {
 		return (v - min) / (max - min);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		ContinuousAttribute ca = (ContinuousAttribute)o;
+		return (ca.min-min<accuracy) && (ca.max-max<accuracy) && ca.getName().equals(getName()) && ca.getIndex()==getIndex();
 	}
 }

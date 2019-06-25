@@ -1,19 +1,75 @@
 package data;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+
+import database.EmptySetException;
 
 class DataTest {
+	
+	static Data d;
 
+	@BeforeAll
+	static void testData() {
+		
+			assertThrows(EmptySetException.class, ()->{
+				d=new Data ("emptytable");
+				});
+			
+			try {
+				d=new Data ("test");
+			} catch (EmptySetException e) {
+				e.printStackTrace();
+				fail("failed");
+			}
+
+	}
+	
 	@Test
-	void testData() {
-		fail("Not yet implemented");
+	void testGetNumberOfExamples() {
+		assertEquals(d.getNumberOfExamples(), 2);
+	}
+	@Test
+	void testGetNumberOfAttributes() {
+		assertEquals(d.getNumberOfAttributes(), 2);
+	}
+	@Test
+	void testGetAttributeValue() {
+		assertEquals((String)d.getAttributeValue(0,0), "primo");
+	}
+	
+	@Test
+	void testGetAttribute() {
+		assertEquals((DiscreteAttribute)d.getAttribute(0), new DiscreteAttribute("discreto", 0, new String[] {"primo","secondo"}));
+		assertEquals((ContinuousAttribute)d.getAttribute(1), new ContinuousAttribute("continuo", 1, 30.3,31.2));
+	}
+	
+	@Test
+	void testGetAttributeSchema() {
+		List<Attribute> test = new LinkedList<>();
+		test.add(new DiscreteAttribute("discreto", 0, new String[] {"primo","secondo"}));
+		test.add(new ContinuousAttribute("continuo", 1, 30.3,31.2));
+		List<Attribute> real = d.getAttributeSchema();
+		assertEquals(test.get(0),real.get(0));
+		assertEquals(test.get(1),real.get(1));
+		assertEquals(test,real);
+		
 	}
 
 	@Test
 	void testGetItemSet() {
-		fail("Not yet implemented");
+	
+		assertEquals(d.getItemSet(0).get(0), new DiscreteItem(new DiscreteAttribute("discreto", 0, new String[] {"primo","secondo"}), "primo"));
+		assertEquals(d.getItemSet(0).get(1), new ContinuousItem(new ContinuousAttribute("continuo", 1, 30.3,31.2), 30.3));
+		
 	}
 
 }

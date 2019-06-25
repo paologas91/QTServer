@@ -54,12 +54,6 @@ public class Tuple implements Serializable {
 	 * @return la distanza
 	 */
 	public double getDistance(final Tuple obj) {
-		/*
-		 * Comportamento: determina la distanza tra la tupla riferita da obj e la tupla
-		 * corrente (riferita da this). La distanza � ottenuta come la somma delle
-		 * distanze tra gli item in posizioni eguali nelle due tuple. Fare uso di double
-		 * distance(Object a) di Item
-		 */
 		double distance = 0.0;
 		for (int i = 0; i < obj.getLength(); i++) {
 			distance += get(i).distance(obj.get(i));
@@ -92,5 +86,11 @@ public class Tuple implements Serializable {
 		}
 		str += tuple[tuple.length - 1].getValue();
 		return str;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (getLength()!=((Tuple)o).getLength()) return false;
+		return ((Tuple)o).getDistance(this)==0;
 	}
 }

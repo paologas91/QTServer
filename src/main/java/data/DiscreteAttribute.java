@@ -32,6 +32,12 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 		return values.iterator();
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		DiscreteAttribute da = (DiscreteAttribute) o;
+		return da.getName().equals(getName()) && da.getIndex()==getIndex() && da.values.equals(values);
+	}
+	
 	int getNumberOfDistinctValues() {
 		return values.size();
 	}

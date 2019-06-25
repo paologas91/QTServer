@@ -28,6 +28,23 @@ public class ClusterSet implements Iterable<Cluster>, Serializable {
 	public Iterator<Cluster> iterator() {
 		return C.iterator();
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		
+		if(C.size()!=((ClusterSet)o).C.size()) 
+			return false;
+		
+		Iterator<Cluster> i = C.iterator();
+		Iterator<Cluster> j = ((ClusterSet)o).C.iterator();
+		boolean equals=true;
+		while(i.hasNext()&&equals==true) {
+			equals=((Cluster)i.next()).equals((Cluster)j.next());
+		}
+		
+		return equals;
+	}
+	
 
 	@Override
 	public String toString() {
