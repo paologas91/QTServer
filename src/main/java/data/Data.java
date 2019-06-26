@@ -58,10 +58,6 @@ public class Data {
 									.toArray(new String[0])));
 				}
 			}
-			System.out.println(" ================= ");
-			System.out.println(attributeSet);
-			System.out.println(" ================= ");
-
 		} catch (final SQLException | DatabaseConnectionException | NoValueException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

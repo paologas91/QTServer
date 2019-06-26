@@ -63,6 +63,7 @@ public class ClusterSet implements Iterable<Cluster>, Serializable {
 			str += i + 1 + ":";
 			str += c.toString(data) + "\n";
 			i++;
+			str += "\n";
 		}
 		return str;
 	}

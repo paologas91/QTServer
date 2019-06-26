@@ -49,14 +49,20 @@ public class ServerOneClient extends Thread {
 		String tabName = "";
 		Double radius = null;
 		boolean cicle = true;
+		String op0 = "lettura tabella da database...";
+		String op1 = "esecuzione algoritmo QT con raggio specificato da utente...";
+		String op2 = "salvataggio su file...";
+		String op3 = "lettura da file...";
+		String op4 = "restituzione nomi tabelle del database...";
+		String op5 = "chiusura socket...";
 
 		try {
 			while (cicle) {
-				System.out.println("in attesa dell'operazione");
+				System.out.println("in attesa dell'operazione da eseguire...");
 				final int operation = (int) in.readObject();
-				System.out.println("scelta operazione numero: " + operation);
 				switch (operation) {
 					case 0:
+						System.out.println("scelta operazione numero " + operation + ": " + op0);
 						tabName = (String) in.readObject();
 						try {
 							data = new Data(tabName);
@@ -67,13 +73,14 @@ public class ServerOneClient extends Thread {
 
 						break;
 					case 1:
+						System.out.println("scelta operazione numero " + operation + ": " + op1);
 						radius = (Double) in.readObject();
 						qt = new QTMiner(radius);
 						try {
 							final int num = qt.compute(data);
 							out.writeObject(OK);
 							out.writeObject(num);
-							out.writeObject(qt.toString());
+							out.writeObject(qt.toString(data));
 						} catch (final EmptyDatasetException e) {
 							out.writeObject("empty");
 						} catch (final ClusteringRadiusException e) {
@@ -82,23 +89,24 @@ public class ServerOneClient extends Thread {
 
 						break;
 					case 2:
+						System.out.println("scelta operazione numero " + operation + ": " + op2);
 						qt.salva(tabName + "_" + radius + ".dmp");
 						out.writeObject(OK);
 						break;
 					case 3:
+						System.out.println("scelta operazione numero " + operation + ": " + op3);
 						final String file = (String) in.readObject() + "_"
 								+ (double) in.readObject() + ".dmp";
-						System.out.println(file);
 						try {
 							qt = new QTMiner(file);
 							out.writeObject(OK);
-							System.out.println(qt);
 							out.writeObject(qt.toString());
 						} catch (FileNotFoundException e) {
 							out.writeObject("filenotfound");
 						}
 						break;
 					case 4:
+						System.out.println("scelta operazione numero " + operation + ": " + op4);
 						final DbAccess db = new DbAccess();
 						final LinkedList<String> tables = new LinkedList<String>();
 						try {
@@ -118,6 +126,7 @@ public class ServerOneClient extends Thread {
 						}
 						break;
 					case 5:
+						System.out.println("scelta operazione numero " + operation + ": " + op5);
 						cicle = false;
 						break;
 					default:

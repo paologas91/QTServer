@@ -138,4 +138,8 @@ public class QTMiner {
 	public String toString() {
 		return C.toString();
 	}
+	
+	public String toString(final Data data) {
+		return C.toString(data);
+	}
 }
