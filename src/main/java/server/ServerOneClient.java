@@ -62,7 +62,7 @@ public class ServerOneClient extends Thread {
 				final int operation = (int) in.readObject();
 				switch (operation) {
 					case 0:
-						System.out.println("scelta operazione numero " + operation + ": " + op0);
+						System.out.println("scelta operazione: " + op0);
 						tabName = (String) in.readObject();
 						try {
 							data = new Data(tabName);
@@ -73,7 +73,7 @@ public class ServerOneClient extends Thread {
 
 						break;
 					case 1:
-						System.out.println("scelta operazione numero " + operation + ": " + op1);
+						System.out.println("scelta operazione: " + op1);
 						radius = (Double) in.readObject();
 						qt = new QTMiner(radius);
 						try {
@@ -89,12 +89,12 @@ public class ServerOneClient extends Thread {
 
 						break;
 					case 2:
-						System.out.println("scelta operazione numero " + operation + ": " + op2);
+						System.out.println("scelta operazione: " + op2);
 						qt.salva(tabName + "_" + radius + ".dmp");
 						out.writeObject(OK);
 						break;
 					case 3:
-						System.out.println("scelta operazione numero " + operation + ": " + op3);
+						System.out.println("scelta operazione: " + op3);
 						final String file = (String) in.readObject() + "_"
 								+ (double) in.readObject() + ".dmp";
 						try {
@@ -106,7 +106,7 @@ public class ServerOneClient extends Thread {
 						}
 						break;
 					case 4:
-						System.out.println("scelta operazione numero " + operation + ": " + op4);
+						System.out.println("scelta operazione: " + op4);
 						final DbAccess db = new DbAccess();
 						final LinkedList<String> tables = new LinkedList<String>();
 						try {
@@ -126,7 +126,7 @@ public class ServerOneClient extends Thread {
 						}
 						break;
 					case 5:
-						System.out.println("scelta operazione numero " + operation + ": " + op5);
+						System.out.println("scelta operazione: " + op5);
 						cicle = false;
 						break;
 					default:
@@ -138,7 +138,7 @@ public class ServerOneClient extends Thread {
 		} finally {
 			try {
 				socket.close();
-				System.out.println("Socket chiusa con successo!");
+				System.out.println("Socket " + socket.getInetAddress() + " chiusa con successo!");
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}

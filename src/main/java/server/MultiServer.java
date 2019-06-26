@@ -30,7 +30,7 @@ public class MultiServer {
 				System.out.println("Aspetto...");
 				final Socket socket = server.accept();
 				new ServerOneClient(socket);
-				System.out.println("Servito");
+				System.out.println("Servito client " + socket.getInetAddress());
 			}
 		} catch (final IOException e) {
 			e.printStackTrace();
