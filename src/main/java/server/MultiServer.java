@@ -55,7 +55,7 @@ public class MultiServer {
 
 	public static void main(final String[] args) {
 		int port = Integer.parseInt(args[0]);
-		if(port<0 || port>65535) {
+		if(port<1024 || port>65535) {
 			System.err.println("porta non valida");
 			return;
 		}

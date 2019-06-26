@@ -28,6 +28,7 @@ public class Data {
 	 * tabella del database.
 	 *
 	 * @param table nome della tabella.
+	 * @throws EmptySetException se la tabella è vuota
 	 */
 
 	public Data(final String table) throws EmptySetException {
