@@ -1,14 +1,20 @@
 package mining;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
 import data.Data;
 import data.EmptyDatasetException;
+import database.DatabaseConnectionException;
 import database.EmptySetException;
+import database.NoValueException;
 
 class QTMinerTest {
 	QTMiner q = null;
@@ -19,7 +25,7 @@ class QTMinerTest {
 		
 		try {
 			d=new Data ("test");
-		} catch (EmptySetException e) {
+		} catch (EmptySetException | SQLException | NoValueException | DatabaseConnectionException e) {
 			e.printStackTrace();
 			fail("failed");
 		}
@@ -45,7 +51,7 @@ class QTMinerTest {
 	void testSalva() {
 		try {
 			d=new Data ("playtennis");
-		} catch (EmptySetException e) {
+		} catch (EmptySetException | SQLException | NoValueException | DatabaseConnectionException e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

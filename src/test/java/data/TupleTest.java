@@ -1,13 +1,20 @@
 package data;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.sql.SQLException;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.junit.jupiter.api.Test;
 
+import database.DatabaseConnectionException;
 import database.EmptySetException;
+import database.NoValueException;
 
 class TupleTest {
 
@@ -38,7 +45,7 @@ class TupleTest {
 		Data d=null;
 		try {
 			d=new Data ("test");
-		} catch (EmptySetException e) {
+		} catch (EmptySetException | SQLException | NoValueException | DatabaseConnectionException e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -48,7 +55,9 @@ class TupleTest {
 		
 		if (d!=null) {
 		assertEquals(d.getItemSet(1).avgDistance(d, clusteredData), d.getItemSet(0).getDistance(d.getItemSet(1)));
-		}else fail("null");
+		} else {
+			fail("null");
+		}
 	}
 
 }

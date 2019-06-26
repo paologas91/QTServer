@@ -4,14 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
+import database.DatabaseConnectionException;
 import database.EmptySetException;
+import database.NoValueException;
 
 class DataTest {
 	
@@ -26,7 +28,7 @@ class DataTest {
 			
 			try {
 				d=new Data ("test");
-			} catch (EmptySetException e) {
+		} catch (EmptySetException | SQLException | NoValueException | DatabaseConnectionException e) {
 				e.printStackTrace();
 				fail(e.getMessage());
 			}
@@ -43,13 +45,13 @@ class DataTest {
 	}
 	@Test
 	void testGetAttributeValue() {
-		assertEquals((String)d.getAttributeValue(0,0), "primo");
+		assertEquals(d.getAttributeValue(0,0), "primo");
 	}
 	
 	@Test
 	void testGetAttribute() {
-		assertEquals((DiscreteAttribute)d.getAttribute(0), new DiscreteAttribute("discreto", 0, new String[] {"primo","secondo"}));
-		assertEquals((ContinuousAttribute)d.getAttribute(1), new ContinuousAttribute("continuo", 1, 30.3,31.2));
+		assertEquals(d.getAttribute(0), new DiscreteAttribute("discreto", 0, new String[] {"primo","secondo"}));
+		assertEquals(d.getAttribute(1), new ContinuousAttribute("continuo", 1, 30.3,31.2));
 	}
 	
 	@Test

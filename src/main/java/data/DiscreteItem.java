@@ -23,9 +23,10 @@ class DiscreteItem extends Item {
 			return 1.0;
 		}
 	}
-	
+
 	@Override
-	public boolean equals(Object o) {
-		return ((DiscreteItem)o).getAttribute().equals(getAttribute()) && ((DiscreteItem)o).getValue().equals(getValue());
+	public boolean equals(final Object o) {
+		return ((DiscreteItem) o).getAttribute().equals(getAttribute())
+				&& ((DiscreteItem) o).getValue().equals(getValue());
 	}
 }

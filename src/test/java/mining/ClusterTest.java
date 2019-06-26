@@ -3,10 +3,14 @@ package mining;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.Test;
 
 import data.Data;
+import database.DatabaseConnectionException;
 import database.EmptySetException;
+import database.NoValueException;
 
 class ClusterTest {
 
@@ -15,7 +19,7 @@ class ClusterTest {
 		Data d = null;
 		try {
 			d = new Data("test");
-		} catch (EmptySetException e) {
+		} catch (EmptySetException | SQLException | NoValueException | DatabaseConnectionException e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

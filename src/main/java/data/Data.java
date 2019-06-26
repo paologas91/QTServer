@@ -28,15 +28,20 @@ public class Data {
 	 * tabella del database.
 	 *
 	 * @param table nome della tabella.
-	 * @throws EmptySetException se la tabella è vuota
+	 * @throws EmptySetException           se la tabella è vuota
+	 * @throws SQLException                se la tabella non esiste
+	 * @throws NoValueException            eccezione lanciata quando l'operatore
+	 *                                     aggregato non da risultati
+	 * @throws DatabaseConnectionException la connesione al databese è fallita
 	 */
 
-	public Data(final String table) throws EmptySetException {
+	public Data(final String table)
+			throws EmptySetException, SQLException, NoValueException, DatabaseConnectionException {
 
 		final DbAccess db = new DbAccess();
 		final TableData tData = new TableData(db);
 
-		try {
+
 
 			db.initConnection();
 			data = tData.getDistinctTransazioni(table);
@@ -58,10 +63,7 @@ public class Data {
 									.toArray(new String[0])));
 				}
 			}
-		} catch (final SQLException | DatabaseConnectionException | NoValueException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+
 	}
 
 	public int getNumberOfExamples() {

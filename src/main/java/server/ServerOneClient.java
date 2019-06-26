@@ -16,6 +16,7 @@ import data.EmptyDatasetException;
 import database.DatabaseConnectionException;
 import database.DbAccess;
 import database.EmptySetException;
+import database.NoValueException;
 import mining.ClusteringRadiusException;
 import mining.QTMiner;
 
@@ -69,6 +70,10 @@ public class ServerOneClient extends Thread {
 							out.writeObject(OK);
 						} catch (final EmptySetException e) {
 							out.writeObject("empty");
+						} catch (SQLException e) {
+							out.writeObject("notFound");
+						} catch (DatabaseConnectionException | NoValueException e) {
+							out.writeObject(e.getMessage());
 						}
 
 						break;

@@ -87,12 +87,12 @@ public class Tuple implements Serializable {
 		str += tuple[tuple.length - 1].getValue();
 		return str;
 	}
-	
+
 	@Override
 	public boolean equals(final Object o) {
-		if (getLength()!=((Tuple)o).getLength()) {
+		if (getLength() != ((Tuple) o).getLength()) {
 			return false;
 		}
-		return ((Tuple)o).getDistance(this)==0;
+		return ((Tuple) o).getDistance(this) == 0;
 	}
 }
